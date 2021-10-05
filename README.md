@@ -10,7 +10,7 @@ ITConsult is a platform where customers can distribute their IT problems or assi
 
 ### Resources:
 
- - [Baeldung](https://www.baeldung.com/spring-tutorial) an [spring.io](https://spring.io/quickstart) quickstart guide
+ - [Baeldung](https://www.baeldung.com/spring-tutorial) and [spring.io](https://spring.io/quickstart) quickstart guide
  - [Markdown](https://www.markdownguide.org/cheat-sheet) basics to edit the README
  - write good [commit messages](https://chris.beams.io/posts/git-commit/), pls
 
@@ -18,3 +18,4 @@ ITConsult is a platform where customers can distribute their IT problems or assi
 
 - determine project structure
 - writing user stories
+- creating UML-Diagramms
