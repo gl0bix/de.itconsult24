@@ -6,7 +6,7 @@ ITConsult is a platform where customers can distribute their IT problems or assi
 - Daniel(gl0bix) 
 - Ariane
 - Jan
-- Chris
+- Chris(sirhC-B)
 - Christian
 
 ### Resources:
