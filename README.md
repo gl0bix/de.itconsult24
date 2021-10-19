@@ -20,3 +20,26 @@ ITConsult is a platform where customers can distribute their IT problems or assi
 - determine project structure
 - writing user stories
 - creating UML-Diagramms
+
+### Task distribution, time slots, tools
+
+general developing direction: bottom up
+
+tasks | developer
+--------- | ---
+database | Daniel
+database access | Jan
+models | Daniel
+Services | Chris, Christian
+Controller | Ariane
+HTML (View) | Chris, (all) 
+
+#### available timeslots for meetings:
+- tuesday afternoon
+- wednesday afternoon
+
+#### used tools:
+- GitHub (duh!)
+- IntelliJ
+- Dioscord/GoogleMeet
+- Notion?
