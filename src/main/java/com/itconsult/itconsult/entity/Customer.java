@@ -1,9 +1,6 @@
 package com.itconsult.itconsult.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,7 +8,10 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "itconsult_customer")
+@Table(name = "itconsult_customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +23,14 @@ public class Customer {
     private String postalCode;
     private String city;
     private String country;
+
+    //  auth requirements
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String email;
+    @Column(nullable = false, length = 128)
+    private String password;
+    private boolean enabled;
+
 
 }
