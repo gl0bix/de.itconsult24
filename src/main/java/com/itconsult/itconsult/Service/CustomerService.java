@@ -15,19 +15,25 @@ import java.util.Optional;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         return (List<Customer>) customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomer(long id){
+    public Optional<Customer> getCustomer(long id) {
         return customerRepository.findById(id);
     }
 
-    public void addCustomer(){
-        /*
-        Frage an Daniel: Müsste Methode nicht eigentlich Typ Customer anstatt void sein?
-        Und müsste man dann nicht mit Builder die Attribute wie Firstname, Lastname... hier übergeben
-         */
+    public Customer addCustomer(long id, String lastname, String firstname, String phonenumber, String street, String postalcode, String city, String country) {
+        return customerRepository.save(Customer.builder()
+                .id(id)
+                .lastname(lastname)
+                .firstname(firstname)
+                .phoneNumber(phonenumber)
+                .street(street)
+                .postalCode(postalcode)
+                .city(city)
+                .country(country)
+                .build());
     }
 
 }
