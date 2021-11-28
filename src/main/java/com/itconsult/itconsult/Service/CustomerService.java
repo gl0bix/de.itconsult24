@@ -36,4 +36,9 @@ public class CustomerService {
                 .build());
     }
 
+    public void getCustomerById(Long id) {
+    }
+
+    public void addCustomer(String getfirstname, String getlastname) {
+    }
 }
