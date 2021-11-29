@@ -1,4 +1,4 @@
-package com.itconsult.itconsult.Service;
+package com.itconsult.itconsult.service;
 
 import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.repository.CustomerRepository;
@@ -23,16 +23,19 @@ public class CustomerService {
         return customerRepository.findById(id);
     }
 
-    public Customer addCustomer(long id, String lastname, String firstname, String phonenumber, String street, String postalcode, String city, String country) {
+    public Customer addCustomer(String lastname, String firstname, String phoneNumber, String street,
+                                String postalCode, String city, String country, String email, String password, Boolean enabled) {
         return customerRepository.save(Customer.builder()
-                .id(id)
                 .lastname(lastname)
                 .firstname(firstname)
-                .phoneNumber(phonenumber)
+                .phoneNumber(phoneNumber)
                 .street(street)
-                .postalCode(postalcode)
+                .postalCode(postalCode)
                 .city(city)
                 .country(country)
+                .email(email)
+                .password(password)
+                .enabled(enabled)
                 .build());
     }
 
