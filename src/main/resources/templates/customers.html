@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Kundenübersicht</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h1>Kundenübersicht</h1>
+
+  <ul>
+    <li th:each="customer: ${customerList}">
+      <span th:text="${customer.lastname}"></span>
+      <span th:text="${customer.firstname}"></span>
+      <span th:text="${customer.phoneNumber}"></span>
+      <span th:text="${customer.street}"></span>
+      <span th:text="${customer.postalCode}"></span>
+      <span th:text="${customer.city}"></span>
+      <span th:text="${customer.country}"></span>
+      <span th:text="${customer.email}"></span>
+    </li>
+  </ul>
+
+  <h2>Neuen Customer erstellen</h2>
+
+  <form action="" method="post">
+    <b>Nachname:</b>
+    <input type="text" name="lastname"><br>
+    <b>Vorname:</b>
+    <input type="text" name="firstname"><br>
+    <b>Telefonnummer</b>
+    <input type="text" name="phoneNumber"><br>
+    <b>Straße</b>
+    <input type="text" name="street"><br>
+    <b>Postleitzahl</b>
+    <input type="text" name="postalCode"><br>
+    <b>Ort</b>
+    <input type="text" name="city"><br>
+    <b>Land</b>
+    <input type="text" name="country"><br>
+    <b>E-Mail</b>
+    <input type="text" name="email"><br>
+
+    <input type="submit" title="Abschicken">
+  </form>
+</div>
+
+</body>
+</html>
