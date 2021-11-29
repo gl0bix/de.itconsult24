@@ -23,16 +23,15 @@ ITConsult is a platform where customers can distribute their IT problems or assi
 
 ### Task distribution, time slots, tools
 
-general developing direction: bottom up
+general developing direction: bottom up, iterative
 
 tasks | developer
 --------- | ---
-database | Daniel
-database access | Jan
-models | Daniel
+Database & Models | Jan
 Services | Chris, Christian
 Controller | Ariane
-HTML (View) | Chris, (all) 
+HTML (View) & Frontend | Chris, Daniel
+Administrative | Daniel
 
 #### available timeslots for meetings:
 - tuesday afternoon
@@ -41,5 +40,6 @@ HTML (View) | Chris, (all)
 #### used tools:
 - GitHub (duh!)
 - IntelliJ
-- Dioscord/GoogleMeet
+- Discord/GoogleMeet
+- [draw.io](https://app.diagrams.net)
 - Notion?
