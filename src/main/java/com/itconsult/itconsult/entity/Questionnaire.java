@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "")
-public class Questionaire {
+public class Questionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
