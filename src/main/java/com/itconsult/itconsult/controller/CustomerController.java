@@ -21,7 +21,6 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -58,19 +57,22 @@ public class CustomerController {
     }
 
     @PostMapping("register/customer")
-    public ModelAndView registerCustomer(
-            @ModelAttribute("customer") @Valid CustomerRegisterFormModel formModel,
-            HttpServletRequest request, Errors errors) {
+    public String registerCustomer(
+            @ModelAttribute("customer") @Valid CustomerRegisterFormModel formModel, BindingResult result,
+            Model model){
 
-        ModelAndView mav = new ModelAndView();
-
-        try {
-            Customer customer = customerService.registerNewCustomer(formModel);
-        } catch (UserAlreadyExistException uaeEx) {
-            mav.addObject("message", "An account for this name/Email already exists.");
+        if(result.hasErrors()){
+            return "customer_registration";
         }
 
-        return new ModelAndView("success_register", "customer", formModel);
+        try {
+            customerService.registerNewCustomer(formModel);
+        } catch (UserAlreadyExistException uaeEx) {
+            model.addAttribute("emailError", "Es existiert bereits ein Account mit dieser Email-Adresse.");
+            return "customer_registration";
+        }
+
+        return "success_register";
     }
 
 

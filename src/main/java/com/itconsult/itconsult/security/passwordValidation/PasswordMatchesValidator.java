@@ -16,16 +16,19 @@ public class PasswordMatchesValidator
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        if (obj instanceof CustomerRegisterFormModel) {
-            CustomerRegisterFormModel c = (CustomerRegisterFormModel) obj;
-            return c.getPassword().equals(c.getConfirmPassword());
-        }
-        if (obj instanceof ProviderRegisterFormModel) {
-            ProviderRegisterFormModel p = (ProviderRegisterFormModel) obj;
-            return p.getPassword().equals(p.getConfirmPassword());
-        }
+        boolean isValid = false;
 
-
-        return false;
+        if (obj instanceof CustomerRegisterFormModel c) {
+            isValid = c.getPassword().equals(c.getConfirmPassword());
+        }
+        if (obj instanceof ProviderRegisterFormModel p) {
+            isValid = p.getPassword().equals(p.getConfirmPassword());
+        }
+        if(!isValid){
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
+                    .addPropertyNode( "confirmPassword" ).addConstraintViolation();
+        }
+        return isValid;
     }
 }
