@@ -40,6 +40,9 @@ public class ProviderRegisterFormModel {
     private String city;
     @NotNull
     @NotEmpty
+    private String country;
+    @NotNull
+    @NotEmpty
     private String password;
     private String confirmPassword;
 }

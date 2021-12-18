@@ -53,6 +53,7 @@ public class CustomerService{
                 .street(form.getStreet())
                 .postalCode(form.getPostalCode())
                 .city(form.getCity())
+                .country(form.getCountry())
                 .email(form.getEmail())
                 .password(form.getPassword())
                 .enabled(true)

@@ -50,14 +50,14 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @GetMapping("customer/register")
+    @GetMapping("register/customer")
     public String showRegisterForm(Model model){
         CustomerRegisterFormModel formModel = new CustomerRegisterFormModel();
         model.addAttribute("customer",formModel);
         return "customer_registration";
     }
 
-    @PostMapping("customer/register")
+    @PostMapping("register/customer")
     public ModelAndView registerCustomer(
             @ModelAttribute("customer") @Valid CustomerRegisterFormModel formModel,
             HttpServletRequest request, Errors errors) {
