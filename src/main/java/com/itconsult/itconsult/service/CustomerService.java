@@ -1,7 +1,9 @@
 package com.itconsult.itconsult.service;
 
+import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
 import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.repository.CustomerRepository;
+import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import java.util.Optional;
 @Service
 @Builder
 @AllArgsConstructor
-public class CustomerService {
+public class CustomerService{
     private final CustomerRepository customerRepository;
 
     public List<Customer> getAllCustomers() {
@@ -37,5 +39,27 @@ public class CustomerService {
                 .password(password)
                 .enabled(enabled)
                 .build());
+    }
+
+    public Customer registerNewCustomer(CustomerRegisterFormModel form) throws UserAlreadyExistException {
+        if (emailExists(form.getEmail())){
+            throw new UserAlreadyExistException("There is an account with that email address: "
+                    + form.getEmail());
+        }
+        return customerRepository.save(Customer.builder()
+                .lastname(form.getLastname())
+                .firstname(form.getFirstname())
+                .phoneNumber(form.getPhoneNumber())
+                .street(form.getStreet())
+                .postalCode(form.getPostalCode())
+                .city(form.getCity())
+                .email(form.getEmail())
+                .password(form.getPassword())
+                .enabled(true)
+                .build());
+    }
+
+    private boolean emailExists(String email) {
+        return customerRepository.findByEmail(email).isPresent();
     }
 }
