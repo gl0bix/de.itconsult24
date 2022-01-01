@@ -1,21 +1,19 @@
 package com.itconsult.itconsult.controller;
 
-import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
-import com.itconsult.itconsult.service.CustomerService;
 import com.itconsult.itconsult.controller.form.CustomerFormModel;
+import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
 import com.itconsult.itconsult.entity.Customer;
+import com.itconsult.itconsult.service.CustomerService;
 import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,12 +22,15 @@ import java.util.List;
 public class CustomerController {
     private final CustomerService customerService;
 
+    @Deprecated
     @GetMapping("customers")
     public String showCustomers(Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
         model.addAttribute("customerList", customerList);
         return "customers";
     }
+
+    @Deprecated
     @PostMapping("customers")
     public String addCustomer(@Valid CustomerFormModel form,
                               BindingResult result) {
@@ -76,6 +77,17 @@ public class CustomerController {
     }
 
 
+    @GetMapping("details")
+    public String showCustomerDetails(Authentication authentication, Model model){
+
+        if (authentication.isAuthenticated()) {
+            Customer customer = customerService.getCustomerByEmail(authentication.getName()).get();
+            model.addAttribute("customer", customer);
+        } else
+            return "redirect:/login";
+
+        return "customer_details";
+    }
 
 }
 

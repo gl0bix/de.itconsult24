@@ -6,6 +6,7 @@ import com.itconsult.itconsult.repository.CustomerRepository;
 import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +17,18 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CustomerService{
     private final CustomerRepository customerRepository;
+    private PasswordEncoder passwordEncoder;
 
     public List<Customer> getAllCustomers() {
         return (List<Customer>) customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomer(long id) {
+    public Optional<Customer> getCustomerById(long id) {
         return customerRepository.findById(id);
     }
+    public Optional<Customer> getCustomerByEmail(String email){ return customerRepository.findByEmail(email); }
 
+    @Deprecated
     public Customer addCustomer(String lastname, String firstname, String phoneNumber, String street,
                                 String postalCode, String city, String country, String email, String password, Boolean enabled) {
         return customerRepository.save(Customer.builder()
@@ -55,7 +59,7 @@ public class CustomerService{
                 .city(form.getCity())
                 .country(form.getCountry())
                 .email(form.getEmail())
-                .password(form.getPassword())
+                .password(passwordEncoder.encode(form.getPassword()))
                 .enabled(true)
                 .build());
     }

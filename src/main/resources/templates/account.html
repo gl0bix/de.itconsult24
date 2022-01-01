@@ -2,11 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
 <head>
-<title>BEREICH FUER ANGEMELDETE KUNDEN!</title>
+<title>Konto</title>
 </head>
 <body>
 	<div layout:fragment="content">
-		<h1>BEREICH FUER ANGEMELDETE KUNDEN!</h1>
+		<h1>Konto</h1>
+
+		<a th:href="@{/details}">Nutzerdaten</a>
 	</div>
 </body>
 </html>
