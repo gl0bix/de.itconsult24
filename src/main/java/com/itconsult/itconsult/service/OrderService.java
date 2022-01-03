@@ -36,7 +36,7 @@ public class OrderService {
     private boolean complete;
 
 
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders(){
         return (List<Order>) orderRepository.findAll();
     }
 
