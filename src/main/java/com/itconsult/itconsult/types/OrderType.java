@@ -1,4 +1,4 @@
-package com.itconsult.itconsult.entity.QuestionaireEnums;
+package com.itconsult.itconsult.types;
 
 public enum OrderType {
     SECURITY_ARCHITECTURE,

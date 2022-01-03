@@ -1,6 +1,6 @@
 package com.itconsult.itconsult.service;
 
-import com.itconsult.itconsult.entity.QuestionaireEnums.OrderType;
+import com.itconsult.itconsult.types.OrderType;
 import com.itconsult.itconsult.entity.Questionnaire;
 import com.itconsult.itconsult.repository.QuestionnaireRepository;
 import lombok.AllArgsConstructor;
