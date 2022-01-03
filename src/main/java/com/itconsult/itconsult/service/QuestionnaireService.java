@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Builder
 @AllArgsConstructor
@@ -18,11 +20,15 @@ public class QuestionnaireService {
      * Frage:
      * Macht der @return hier Sinn?
      */
-    public Questionnaire getEmptyQuestionaire() {
+    public Questionnaire getEmptyQuestionnaire() {
         return new Questionnaire();
     }
 
-    public Questionnaire createOrderFromQuestionaire(String urgency, String duration, String CompanyDescription,
+    public Optional<Questionnaire> getQuestionnaire(long id){
+        return questionnaireRepository.findById(id);
+    }
+
+    public Questionnaire createOrderFromQuestionnaire(String urgency, String duration, String CompanyDescription,
                                                      String ProblemDescription, OrderType orderType) {
         return questionnaireRepository.save(Questionnaire.builder()
                 .urgency(urgency)

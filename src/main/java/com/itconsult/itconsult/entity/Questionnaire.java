@@ -1,10 +1,12 @@
 package com.itconsult.itconsult.entity;
 
-import com.itconsult.itconsult.types.OrderType;
+import com.itconsult.itconsult.entity.QuestionaireEnums.OrderType;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @Builder
@@ -16,19 +18,12 @@ import javax.validation.constraints.Size;
 public class Questionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
     private long id;
 
-    private OrderType orderType;
     private String urgency;
     private String duration;
-
-    @Column(length = 1000)
-    @Size(max = 1000)
     private String CompanyDescription;
-    @Column(length = 1000)
-    @Size(max = 1000)
     private String ProblemDescription;
-
+    private OrderType orderType;
 
 }
