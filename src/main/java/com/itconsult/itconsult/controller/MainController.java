@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String showNotebooks(Model model) {
+    public String home(Model model) {
         return "home";
-    }
 
-    @GetMapping("secure")
-    public String securedPage() {
-        return "secure";
+    }
+    @GetMapping("account")
+    public String securedAccountPage() {
+        return "account";
     }
 }

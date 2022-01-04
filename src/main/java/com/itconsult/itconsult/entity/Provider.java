@@ -2,10 +2,7 @@ package com.itconsult.itconsult.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Builder
@@ -24,4 +21,10 @@ public class Provider {
     private String postalCode;
     private String city;
     private String country;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String email;
+    @Column(nullable = false, length = 128)
+    private String password;
+    private boolean enabled;
 }
