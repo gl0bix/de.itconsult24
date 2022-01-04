@@ -6,4 +6,5 @@ import org.springframework.data.repository.RepositoryDefinition;
 
 @RepositoryDefinition(domainClass = Questionnaire.class, idClass = Long.class)
 public interface QuestionnaireRepository extends CrudRepository<Questionnaire, Long> {
+
 }
