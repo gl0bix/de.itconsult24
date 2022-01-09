@@ -18,8 +18,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private Questionnaire questionnaire;
-    private Customer customer;
 
     public List<Order> getAllOrders(){
         return (List<Order>) orderRepository.findAll();
