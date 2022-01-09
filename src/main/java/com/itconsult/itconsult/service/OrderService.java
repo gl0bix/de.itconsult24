@@ -12,11 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.Validate;
 
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
