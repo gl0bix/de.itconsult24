@@ -3,6 +3,7 @@ package com.itconsult.itconsult.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,6 +23,9 @@ public class Customer {
     private String postalCode;
     private String city;
     private String country;
+
+    @OneToMany
+    private List<Order> order;
 
     //  auth requirements
 

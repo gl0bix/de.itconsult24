@@ -1,5 +1,6 @@
 package com.itconsult.itconsult.entity;
 
+import com.itconsult.itconsult.enums.OrderStatus;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -22,4 +23,6 @@ public class Order {
     private String title;
     private Date date;
     private String description;
+    private OrderStatus orderStatus;
+
 }

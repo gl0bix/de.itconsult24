@@ -1,11 +1,10 @@
 package com.itconsult.itconsult.entity;
 
+import com.itconsult.itconsult.enums.OrderType;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,9 +18,12 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String competence;
+    private OrderType orderType;
     private String street;
     private String postalCode;
     private String city;
     private String country;
+
+    @OneToMany
+    private List<Order> order;
 }
