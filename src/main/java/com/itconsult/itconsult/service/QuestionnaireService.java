@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -28,15 +29,8 @@ public class QuestionnaireService {
         return questionnaireRepository.findById(id);
     }
 
-    public Questionnaire createOrderFromQuestionnaire(String urgency, String duration, String CompanyDescription,
-                                                     String ProblemDescription, OrderType orderType) {
-        return questionnaireRepository.save(Questionnaire.builder()
-                .urgency(urgency)
-                .duration(duration)
-                .CompanyDescription(CompanyDescription)
-                .ProblemDescription(ProblemDescription)
-                .orderType(orderType)
-                .build());
-
+    public void createOrderFromQuestionnaire() {
+        orderService.addOrder("title", new Date(), "Description");
     }
+
 }
