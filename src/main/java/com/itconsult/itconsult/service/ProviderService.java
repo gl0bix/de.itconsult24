@@ -3,6 +3,7 @@ package com.itconsult.itconsult.service;
 import com.itconsult.itconsult.controller.form.ProviderRegisterFormModel;
 import com.itconsult.itconsult.entity.Provider;
 import com.itconsult.itconsult.repository.ProviderRepository;
+import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,10 @@ public class ProviderService {
         return providerRepository.findById(id);
     }
 
+    public Optional<Provider> getProviderByEmail(String email) {
+        return providerRepository.findByEmail(email);
+    }
+
     public Provider addProvider(String name, String competence, String street, String postalCode, String city, String country) {
         return providerRepository.save(Provider.builder()
                 .name(name)
@@ -39,14 +44,14 @@ public class ProviderService {
 
     }
 
-    public Provider registerNewProvider(ProviderRegisterFormModel form) throws UserAlreadyExistException {
-        // if (emailExists(form.getEmail())){
-        // throw new UserAlreadyExistException("There is an account with that email address: "
-        //       + form.getEmail());
-        //
-        //  }
-        return providerRepository.save(Provider.builder()
-                .name(form.getName())
+    public void registerNewProvider(ProviderRegisterFormModel form) throws UserAlreadyExistException {
+        if (emailExists(form.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address: "
+                    + form.getEmail());
+
+        }
+        providerRepository.save(Provider.builder()
+                .name(form.getCompany())
                 .competence(form.getCompetence())
                 .street(form.getStreet())
                 .postalCode(form.getPostalCode())

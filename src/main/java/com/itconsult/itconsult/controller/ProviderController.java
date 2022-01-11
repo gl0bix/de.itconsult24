@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -24,40 +25,41 @@ public class ProviderController {
     @GetMapping("register/provider")
     public String showRegisterForm(Model model) {
         ProviderRegisterFormModel formModel = new ProviderRegisterFormModel();
-        model.addAttribute("customer", formModel);
-        return "provider_registration";
+        model.addAttribute("provider", formModel);
+        return "register/provider_registration";
     }
 
     @PostMapping("register/provider")
     public String registerProvider(
-            @ModelAttribute("customer") @Valid ProviderRegisterFormModel formModel, BindingResult result,
+            @ModelAttribute("provider") @Valid ProviderRegisterFormModel formModel, BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            return "provider_registration";
+            return "register/provider_registration";
         }
 
         try {
             providerService.registerNewProvider(formModel);
         } catch (UserAlreadyExistException uaeEx) {
             model.addAttribute("emailError", "Es existiert bereits ein Account mit dieser Email-Adresse.");
-            return "provider_registration";
+            return "register/provider_registration";
         }
 
-        return "success_register";
+        return "register/success_register";
     }
 
 
-    @GetMapping("details")
-    public String showProviderDetails(Authentication authentication, Model model) {
+    @GetMapping("data/provider")
+    public String showProviderData(Authentication authentication, Model model) {
 
-        if (authentication.isAuthenticated()) {
-            Provider provider = providerService.getProviderByEmail(authentication.getName()).get();
-            model.addAttribute("provider", provider);
+        Optional<Provider> provider = providerService.getProviderByEmail(authentication.getName());
+
+        if (authentication.isAuthenticated() && provider.isPresent()) {
+            model.addAttribute("provider", provider.get());
         } else
             return "redirect:/login";
 
-        return "provider_details";
+        return "account/provider_data";
     }
 
 }

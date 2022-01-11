@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -54,7 +55,7 @@ public class CustomerController {
     public String showRegisterForm(Model model){
         CustomerRegisterFormModel formModel = new CustomerRegisterFormModel();
         model.addAttribute("customer",formModel);
-        return "customer_registration";
+        return "register/customer_registration";
     }
 
     @PostMapping("register/customer")
@@ -63,30 +64,31 @@ public class CustomerController {
             Model model){
 
         if(result.hasErrors()){
-            return "customer_registration";
+            return "register/customer_registration";
         }
 
         try {
             customerService.registerNewCustomer(formModel);
         } catch (UserAlreadyExistException uaeEx) {
             model.addAttribute("emailError", "Es existiert bereits ein Account mit dieser Email-Adresse.");
-            return "customer_registration";
+            return "register/customer_registration";
         }
 
-        return "success_register";
+        return "register/success_register";
     }
 
 
-    @GetMapping("details")
-    public String showCustomerDetails(Authentication authentication, Model model){
+    @GetMapping("data/customer")
+    public String showCustomerData(Authentication authentication, Model model) {
 
-        if (authentication.isAuthenticated()) {
-            Customer customer = customerService.getCustomerByEmail(authentication.getName()).get();
-            model.addAttribute("customer", customer);
+        Optional<Customer> customer = customerService.getCustomerByEmail(authentication.getName());
+
+        if (authentication.isAuthenticated() && customer.isPresent()) {
+            model.addAttribute("customer", customer.get());
         } else
             return "redirect:/login";
 
-        return "customer_details";
+        return "account/customer_data";
     }
 
 }

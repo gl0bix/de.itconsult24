@@ -17,32 +17,29 @@ import javax.validation.constraints.NotNull;
 @PasswordMatches
 public class ProviderRegisterFormModel {
     @NotNull
-    @NotEmpty
-    private String name;
+    @NotEmpty(message = "Das Feld Firmenname darf nicht leer sein")
+    private String company;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Branche darf nicht leer sein")
     private String competence;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Email darf nicht leer sein")
     @Email
     private String email;
     @NotNull
-    @NotEmpty
-    private String phoneNumber;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Straße darf nicht leer sein")
     private String street;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Postleitzahl darf nicht leer sein")
     private String postalCode;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Stadt darf nicht leer sein")
     private String city;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Land darf nicht leer sein")
     private String country;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Das Feld Passwort darf nicht leer sein")
     private String password;
     private String confirmPassword;
 }
