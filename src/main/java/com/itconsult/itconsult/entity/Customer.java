@@ -3,6 +3,7 @@ package com.itconsult.itconsult.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
@@ -23,6 +24,14 @@ public class Customer {
     private String city;
     private String country;
 
+    // relations
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Questionnaire> questionnaire;
+
     //  auth requirements
 
     @Column(nullable = false, unique = true, length = 50)
@@ -30,6 +39,8 @@ public class Customer {
     @Column(nullable = false, length = 128)
     private String password;
     private boolean enabled;
+
+
 
 
 }

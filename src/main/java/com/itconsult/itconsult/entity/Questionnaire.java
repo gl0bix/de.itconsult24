@@ -30,5 +30,8 @@ public class Questionnaire {
     @Size(max = 1000)
     private String ProblemDescription;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
 }

@@ -2,10 +2,8 @@ package com.itconsult.itconsult.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
@@ -24,4 +22,7 @@ public class Provider {
     private String postalCode;
     private String city;
     private String country;
+
+    @OneToMany(mappedBy = "provider")
+    private Set<Order> orders;
 }
