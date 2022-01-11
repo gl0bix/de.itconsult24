@@ -7,7 +7,9 @@ import com.itconsult.itconsult.repository.CustomerRepository;
 import com.itconsult.itconsult.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -16,8 +18,9 @@ import java.util.Optional;
 @Service
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrderService {
-    private final OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     private Questionnaire questionnaire;
     private Customer customer;
 
