@@ -23,6 +23,12 @@ public class Provider {
     private String city;
     private String country;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String email;
+    @Column(nullable = false, length = 128)
+    private String password;
+    private boolean enabled;
+
     @OneToMany(mappedBy = "provider")
     private Set<Order> orders;
 }
