@@ -10,7 +10,16 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="signup-form">
-                    <form action="" class="mt-5 border p-4 bg-light shadow">
+                    <form th:object="${provider}" th:action="@{/register/provider}" method="post"
+                          class="mt-5 border p-4 bg-light shadow">
+                        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible">
+                            <ul>
+                                <li class="" th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                        <div th:if="${emailError} != null" class="alert alert-danger alert-dismissible">
+                            <p th:text="${emailError}"></p>
+                        </div>
                         <h4 class="mb-4 text-secondary">Erstelle einen Account</h4>
                         <div class="row">
                             <div class="mb-3 col-md-6">
@@ -19,18 +28,13 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label>Branche</label>
-                                <input type="text" name="branch" class="form-control"/>
+                                <input type="text" name="competence" class="form-control"/>
                             </div>
-
                             <div class="mb-3 col-md-6">
                                 <label>Email</label>
                                 <input type="text" name="email" class="form-control"/>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label>Telefonnummer</label>
-                                <input type="text" name="phoneNumber" class="form-control"/>
-                            </div>
-                            <div class="mb-3 col-md-12">
                                 <label>Adresse</label>
                                 <input type="text" name="street" class="form-control"/>
                             </div>
@@ -42,7 +46,10 @@
                                 <label>Ort</label>
                                 <input type="text" name="city" class="form-control"/>
                             </div>
-
+                            <div class="mb-3 col-md-6">
+                                <label>Land</label>
+                                <input type="text" name="country" class="form-control"/>
+                            </div>
                             <div class="mb-3 col-md-6">
                                 <label>Passwort</label>
                                 <input type="password" name="password" class="form-control"/>
@@ -52,7 +59,7 @@
                                 <input type="password" name="confirmPassword" class="form-control"/>
                             </div>
                             <div class="col-md-12">
-                                <input type="submit" class="btn btn-primary float-end" th:text="Registrieren"/>
+                                <button type="submit" class="btn btn-primary float-end">Registrieren</button>
                             </div>
                         </div>
                     </form>
