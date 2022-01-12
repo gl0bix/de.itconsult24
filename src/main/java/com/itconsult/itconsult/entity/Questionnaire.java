@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @Builder
@@ -22,6 +23,7 @@ public class Questionnaire {
     private OrderType orderType;
     private String urgency;
     private String duration;
+    private Date date;
 
     @Column(length = 1000)
     @Size(max = 1000)

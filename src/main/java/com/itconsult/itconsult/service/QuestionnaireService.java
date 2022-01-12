@@ -16,10 +16,6 @@ public class QuestionnaireService {
     private final QuestionnaireRepository questionnaireRepository;
     private OrderService orderService;
 
-    /**
-     * Frage:
-     * Macht der @return hier Sinn?
-     */
     public Questionnaire getEmptyQuestionnaire() {
         return new Questionnaire();
     }
@@ -28,8 +24,6 @@ public class QuestionnaireService {
         return questionnaireRepository.findById(id);
     }
 
-    public void createOrderFromQuestionnaire() {
-        orderService.addOrder("title", new Date(), "Description");
-    }
+
 
 }

@@ -3,6 +3,7 @@ package com.itconsult.itconsult.service;
 import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.entity.Order;
 import com.itconsult.itconsult.entity.Questionnaire;
+import com.itconsult.itconsult.enums.OrderStatus;
 import com.itconsult.itconsult.repository.CustomerRepository;
 import com.itconsult.itconsult.repository.OrderRepository;
 import lombok.AllArgsConstructor;
@@ -23,28 +24,38 @@ public class OrderService {
     private OrderRepository orderRepository;
     private Questionnaire questionnaire;
     private Customer customer;
+    private Order order;
 
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
         return (List<Order>) orderRepository.findAll();
     }
 
-    public List<Order> getAllOrdersByCustomer(){
+    public List<Order> getAllOrdersByCustomer() {
         return (List<Order>) orderRepository.findAll();
     }
 
-    public Optional<Order> getOrder(long id){
+    public Optional<Order> getOrder(long id) {
         return orderRepository.findById(id);
     }
 
-    public Order addOrder(String title, Date date, String description){
+    public Order addOrder(String title, Date date, String description, OrderStatus orderStatus) {
         return orderRepository.save(Order.builder()
                 .title(title)
                 .date(date)
                 .description(description)
+                .orderStatus(orderStatus)
+                .build());
+    }
+
+    public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
+        return orderRepository.save(Order.builder()
+                .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
+                .description(questionnaire.getProblemDescription())
+                .orderStatus(OrderStatus.OPEN)
                 .build());
     }
     /**
-     * Questionnaire übergeben
+     * TODO
      * Vergleich nach Provider (OrderType)
      * CustomerService aufrufen, falls neue Order
      */
