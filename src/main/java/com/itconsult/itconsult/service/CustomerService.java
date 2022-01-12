@@ -45,12 +45,12 @@ public class CustomerService{
                 .build());
     }
 
-    public Customer registerNewCustomer(CustomerRegisterFormModel form) throws UserAlreadyExistException {
-        if (emailExists(form.getEmail())){
+    public void registerNewCustomer(CustomerRegisterFormModel form) throws UserAlreadyExistException {
+        if (emailExists(form.getEmail())) {
             throw new UserAlreadyExistException("There is an account with that email address: "
                     + form.getEmail());
         }
-        return customerRepository.save(Customer.builder()
+        customerRepository.save(Customer.builder()
                 .lastname(form.getLastname())
                 .firstname(form.getFirstname())
                 .phoneNumber(form.getPhoneNumber())
