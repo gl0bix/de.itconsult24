@@ -46,5 +46,8 @@ public class Questionnaire {
     private String typeOfProject;   //Softwareentwicklung: Projektbereich
     private String systemadmin;     //Systemadministration
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
 }
