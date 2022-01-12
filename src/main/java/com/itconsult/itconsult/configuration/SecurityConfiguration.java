@@ -1,6 +1,7 @@
 package com.itconsult.itconsult.configuration;
 
 import com.itconsult.itconsult.repository.CustomerRepository;
+
 import com.itconsult.itconsult.repository.ProviderRepository;
 import com.itconsult.itconsult.security.CustomerDetailsService;
 import com.itconsult.itconsult.security.ProviderDetailsService;

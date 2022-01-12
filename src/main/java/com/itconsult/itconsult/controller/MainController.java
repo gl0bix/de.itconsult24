@@ -14,7 +14,6 @@ public class MainController {
     @GetMapping("/")
     public String home() {
         return "home";
-
     }
 
     @GetMapping("account")

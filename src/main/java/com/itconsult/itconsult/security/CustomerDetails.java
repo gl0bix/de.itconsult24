@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 @Value
 @Builder(toBuilder = true)
 @ToString
 public class CustomerDetails implements UserDetails {
+
     String username;
     @ToString.Exclude
     String password;

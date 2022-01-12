@@ -1,5 +1,6 @@
 package com.itconsult.itconsult.service;
 
+
 import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
 import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.repository.CustomerRepository;
@@ -15,9 +16,11 @@ import java.util.Optional;
 @Service
 @Builder
 @AllArgsConstructor
+
 public class CustomerService{
     private final CustomerRepository customerRepository;
     private PasswordEncoder passwordEncoder;
+
 
     public List<Customer> getAllCustomers() {
         return (List<Customer>) customerRepository.findAll();
