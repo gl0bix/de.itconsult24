@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Registrieren</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="signup-form">
+                    <form th:object="${provider}" th:action="@{/register/provider}" method="post"
+                          class="mt-5 border p-4 bg-light shadow">
+                        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible">
+                            <ul>
+                                <li class="" th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                        <div th:if="${emailError} != null" class="alert alert-danger alert-dismissible">
+                            <p th:text="${emailError}"></p>
+                        </div>
+                        <h4 class="mb-4 text-secondary">Erstelle einen Account</h4>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label>Firmenname</label>
+                                <input type="text" name="company" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Branche</label>
+                                <input type="text" name="competence" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Email</label>
+                                <input type="text" name="email" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Adresse</label>
+                                <input type="text" name="street" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Postleitzahl</label>
+                                <input type="text" name="postalCode" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Ort</label>
+                                <input type="text" name="city" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Land</label>
+                                <input type="text" name="country" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Passwort</label>
+                                <input type="password" name="password" class="form-control"/>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label>Passwort bestätigen</label>
+                                <input type="password" name="confirmPassword" class="form-control"/>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary float-end">Registrieren</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3 text-secondary">Haben sie einen Account? <a th:href="@{/login}">Jetzt anmelden</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

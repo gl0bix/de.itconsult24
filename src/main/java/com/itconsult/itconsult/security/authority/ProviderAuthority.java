@@ -2,13 +2,12 @@ package com.itconsult.itconsult.security.authority;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public class CustomerAuthority implements GrantedAuthority {
+public class ProviderAuthority implements GrantedAuthority {
 
-    public final static String CUSTOMER = "CUSTOMER";
+    public final static String PROVIDER = "PROVIDER";
 
     @Override
     public String getAuthority() {
-        return CUSTOMER;
+        return PROVIDER;
     }
-
 }

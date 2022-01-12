@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}">
+      layout:decorate="~{layout.html}" lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Home</title>
 </head>
 <body>
-	<div layout:fragment="content">
-		<h2>IT-CONSULT24</h2>
-    
-	    <p>Herzlich Willkommen!</p>
-	</div>
+<div layout:fragment="content">
+
+    <h2>IT-CONSULT24</h2>
+
+    <p>Herzlich Willkommen!</p>
+
+    <div class="row">
+        <div class="col">
+            <label for="customerRegister">Registrieren als Kunde:</label>
+            <a class="btn btn-primary" id="customerRegister" type="button" th:href="@{/register/customer}"><i
+                    class="bi bi-arrow-right-square"></i></a>
+        </div>
+        <div class="col">
+            <label for="providerRegister">Registrieren als Dienstleister:</label>
+            <a class="btn btn-primary" id="providerRegister" type="button" th:href="@{/register/provider}"><i
+                    class="bi bi-arrow-right-square"></i></a>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <p> Schon registriert? <a th:href="@{/login}">Hier anmelden</a></p>
+    </div>
+</div>
+
 </body>
 </html>

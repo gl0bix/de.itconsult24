@@ -1,6 +1,6 @@
 package com.itconsult.itconsult.security;
 
-import com.itconsult.itconsult.security.authority.CustomerAuthority;
+import com.itconsult.itconsult.security.authority.ProviderAuthority;
 import lombok.Builder;
 import lombok.ToString;
 import lombok.Value;
@@ -12,12 +12,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
 @Value
 @Builder(toBuilder = true)
 @ToString
-public class CustomerDetails implements UserDetails {
-
+public class ProviderDetails implements UserDetails {
     String username;
     @ToString.Exclude
     String password;
@@ -31,7 +29,7 @@ public class CustomerDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
 
-        list.add(new SimpleGrantedAuthority(CustomerAuthority.CUSTOMER));
+        list.add(new SimpleGrantedAuthority(ProviderAuthority.PROVIDER));
 
         return list;
     }

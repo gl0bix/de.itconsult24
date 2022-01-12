@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Nutzerdaten</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Nachname</td>
+                            <td><span th:text="${customer.lastname}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Vorname</td>
+                            <td><span th:text="${customer.firstname}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Straße</td>
+                            <td><span th:text="${customer.street}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Postleitzahl</td>
+                            <td><span th:text="${customer.postalCode}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Stadt</td>
+                            <td><span th:text="${customer.city}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Land</td>
+                            <td><span th:text="${customer.country}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Email-Adresse</td>
+                            <td><span th:text="${customer.email}"></span></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
