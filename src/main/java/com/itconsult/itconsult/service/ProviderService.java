@@ -20,7 +20,7 @@ import java.util.Optional;
 public class ProviderService {
     private final ProviderRepository providerRepository;
     private PasswordEncoder passwordEncoder;
-  
+
     public Optional<Provider> getProviderByEmail(String email) {return providerRepository.findByEmail(email);}
 
     public List<Provider> getallProviders() {
@@ -53,7 +53,7 @@ public class ProviderService {
         }
         providerRepository.save(Provider.builder()
                 .name(form.getCompany())
-                //.competence(form.getCompetence())
+                .orderType(form.getOrderType())
                 .street(form.getStreet())
                 .postalCode(form.getPostalCode())
                 .city(form.getCity())

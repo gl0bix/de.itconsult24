@@ -10,88 +10,171 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-8 offset-md-2">
                 <h1>Fragebogen ITconsult24</h1>
-                <form>
-                    <div class="form-group">
-                        <label>Zu welchem Bereich gehört Ihr IT-Problem?</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="security" value="branch.security">
-                            <label class="form-check-label">akuter Sicherheitsfall</label>
+                <form th:object="${questionnaire}" th:action="@{/questionnaire}" method="post"
+                      class="mt-5 border p-4 bg-light shadow">
+                    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible">
+                        <ul>
+                            <li class="" th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="form-group mb-2">
+                            <label for="selectOrderType" class="form-label">Zu welchem Bereich gehört Ihr IT-Problem?
+                                *</label>
+                            <select id="selectOrderType" class="form-control form-control-lg" name="orderType">
+                                <option th:each="orderType : ${T(com.itconsult.itconsult.enums.OrderType).values()}"
+                                        th:value="${orderType}" th:text="${orderType.value}"></option>
+                            </select>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="secureInfrastructure" value="branch.sercureInfrastructure">
-                            <label class="form-check-label">Sicherheitsarchitektur</label>
+                        <div class="form-group mb-2">
+                            <label class="form-label">Wie eilig ist Ihr Anliegen? *</label>
+                            <select class="form-control" name="urgency">
+                                <option value="veryUrgent">
+                                    sehr eilig
+                                </option>
+                                <option value="urgent">
+                                    eilig
+                                </option>
+                                <option value="lessUrgent">
+                                    weniger eilig
+                                </option>
+                                <option value="notUrgent">
+                                    nicht eilig
+                                </option>
+                            </select>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="hardware" value="branch.hardware">
-                            <label class="form-check-label">Hardware</label>
+                        <div class="form-group mb-2">
+                            <label class="form-label">Wie schätzen Sie den Umfang Ihres Anliegens ein? *</label>
+                            <select class="form-control" name="volume">
+                                <option value="shortCommission">
+                                    Kurzauftrag
+                                </option>
+                                <option value="middleTermProjekt">
+                                    mittelfristiges Projekt
+                                </option>
+                                <option value="longTermProjekt">
+                                    langfristiges Projekt
+                                </option>
+                                <option value="unsure">
+                                    unsicher
+                                </option>
+                            </select>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="scaling" value="branch.scaling">
-                            <label class="form-check-label">Leistung, Skalierung</label>
+                        <div class="form-group mb-2">
+                            <label>Bitte geben Sie uns eine kurze Beschreibung Ihres Unternehmens/Projektes *</label>
+                            <textarea class="form-control" name="customerDescription"
+                                      placeholder="Unternehmensbeschreibung"
+                                      required="required"></textarea>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="cloud" value="branch.cloud">
-                            <label class="form-check-label">Cloud</label>
+                        <div class="form-group mb-2">
+                            <label class="form-label">Hier können Sie Ihr Anliegen in eigenen Worten
+                                beschreiben/ergänzen. *</label>
+                            <textarea class="form-control" name="problemDescription" placeholder=""
+                                      required="required"></textarea>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="Netzwerk" value="branch.network">
-                            <label class="form-check-label">Netzwerkinfrastruktur</label>
+                        <small>Felder markiert mit * sind Pflichtfelder.</small>
+
+                        <hr>
+                        <div id="detailQuestions" class="form-group">
+                            <h3>Detailfragen</h3>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Sicherheitsarchitektur: Art der Maßnahme (eigene Eingabe
+                                    möglich)</label>
+                                <input class="form-control" type="text" list="securityArchitecture"
+                                       name="typeOfMeasure">
+                                <datalist class="form-control" id="securityArchitecture" hidden>
+                                    <option value="allgemeines Sicherheitskonzept"></option>
+                                    <option value="Segmentierung, Firewall"></option>
+                                    <option value="Mitarbeiter*innenschulung"></option>
+                                    <option value="Penetration Testing"></option>
+                                    <option value="IT Forensik"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Akuter Sicherheitsfall: Art des Angriffs (eigene Eingabe
+                                    möglich)</label>
+                                <input class="form-control" type="text" list="typeOfAttack" name="typeOfAttack">
+                                <datalist class="form-control" id="typeOfAttack" hidden>
+                                    <option value="Ransomware"></option>
+                                    <option value="DOS oder DDOS"></option>
+                                    <option value="Data Leakage"></option>
+                                    <option value="Virenbefall"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Hardware: Art der Leistung (eigene Eingabe möglich)</label>
+                                <input class="form-control" type="text" list="hardware" name="typeOfDevices">
+                                <datalist class="form-control" id="hardware" hidden>
+                                    <option value="PCs">PCs</option>
+                                    <option value="Telefonanlage"></option>
+                                    <option value="Peripheriegeräte"></option>
+                                    <option value="Server"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Leistung, Skalierung: Art der Leistung (eigene Eingabe
+                                    möglich)</label>
+                                <input class="form-control" type="text" list="scalability" name="typeOfSoftware">
+                                <datalist class="form-control" id="scalability" hidden>
+                                    <option value="Content Distribution"></option>
+                                    <option value="Performance Testing"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Cloud: Art der Leistung (eigene Eingabe möglich)</label>
+                                <input class="form-control" type="text" list="cloud" name="typeOfCloud">
+                                <datalist class="form-control" id="cloud" hidden>
+                                    <option value="IaS (Infrastructure as a Service)"></option>
+                                    <option value="PaS (Platform as a Service)"></option>
+                                    <option value="IaS (Software as a Service)"></option>
+                                    <option value="bestehendes Projekt in Cloud migrieren"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label class="form-label">internes Netzwerk: Art der Leistung (eigene Eingabe
+                                    möglich)</label>
+                                <input class="form-control" type="text" list="network" name="typeOfCloud">
+                                <datalist class="form-control" id="network" hidden>
+                                    <option value="Aufbau"></option>
+                                    <option value="Erweiterung"></option>
+                                    <option value="Erneuerung"></option>
+                                </datalist>
+                                <textarea class="form-control" name="networkDetails"
+                                          placeholder="weitere Details zum Netzwerk"></textarea>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Software Development: Projektstatus (eigene Eingabe
+                                    möglich)</label>
+                                <input class="form-control" type="text" list="softwareDevelopment-status"
+                                       name="projectStatus">
+                                <datalist class="form-control" id="softwareDevelopment-status" hidden>
+                                    <option value="neues Projekt"></option>
+                                    <option value="laufendes Projekt"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Software Development: Projektbereich (eigene Eingabe
+                                    möglich)</label>
+                                <input class="form-control" type="text" list="softwareDevelopment-type"
+                                       name="typeOfProject">
+                                <datalist class="form-control" id="softwareDevelopment-type" hidden>
+                                    <option value="Webanwendung"></option>
+                                    <option value="mobile Anwendung"></option>
+                                    <option value="Multiplatform"></option>
+                                    <option value="Desktopanwendung"></option>
+                                    <option value="IoT"></option>
+                                    <option value="SAP"></option>
+                                    <option value="KI, machine learning"></option>
+                                    <option value="Steuersoftware, eingebettete Systeme"></option>
+                                </datalist>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="development" value="branch.development">
-                            <label class="form-check-label">Softwareentwicklung</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="sysadmin" value="branch.sysadmin">
-                            <label class="form-check-label">Systemadministration</label>
+                        <div class="col-md-12 mt-2">
+                            <button type="submit" class="btn btn-primary float-end">Abschicken</button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Wie eilig ist Ihr Anliegen?</label>
-                        <select class="form-control" name="urgency">
-                            <option value="veryUrgent">
-                                sehr eilig
-                            </option>
-                            <option value="urgent">
-                                eilig
-                            </option>
-                            <option value="lessUrgent">
-                                weniger eilig
-                            </option>
-                            <option value="notUrgent">
-                                nicht eilig
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Wie schätzen Sie den Umfang Ihres Anliegens ein?</label>
-                        <select class="form-control" name="volume">
-                            <option value="shortCommission">
-                                Kurzauftrag
-                            </option>
-                            <option value="middleTermProjekt">
-                                mittelfristiges Projekt
-                            </option>
-                            <option value="longTermProjekt">
-                                langfristiges Projekt
-                            </option>
-                            <option value="unsure">
-                                unsicher
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Bitte geben Sie uns eine kurze Beschreibung Ihres Unternehmens/Projektes *</label>
-                        <textarea class="form-control" name="customerDescription" placeholder="Unternehmensbeschreibung"
-                                  required="required"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Hier können Sie Ihr Anliegen in eigenen Worten beschreiben/ergänzen. *</label>
-                        <textarea class="form-control" name="problemDescription" placeholder="" required="required"></textarea>
-                    </div>
-                    <small>Felder markiert mit * sind Pflichtfelder.</small>
                 </form>
             </div>
         </div>
