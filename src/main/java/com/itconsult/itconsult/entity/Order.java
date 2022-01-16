@@ -1,12 +1,10 @@
 package com.itconsult.itconsult.entity;
 
 import com.itconsult.itconsult.enums.OrderStatus;
+import com.itconsult.itconsult.enums.OrderType;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -15,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "order")
+@Entity(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +22,15 @@ public class Order {
     private Date date;
     private String description;
     private OrderStatus orderStatus;
+    private OrderType orderType;
+
+    //relations
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id", nullable = false)
+    private Provider provider;
 
 }

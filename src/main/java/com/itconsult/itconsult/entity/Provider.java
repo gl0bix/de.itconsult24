@@ -4,7 +4,7 @@ import com.itconsult.itconsult.enums.OrderType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -24,6 +24,7 @@ public class Provider {
     private String city;
     private String country;
 
-    @OneToMany
-    private List<Order> order;
+    //relations
+    @OneToMany(mappedBy = "provider")
+    private Set<Order> orders;
 }
