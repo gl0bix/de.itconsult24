@@ -16,6 +16,7 @@ import org.thymeleaf.util.Validate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,7 @@ public class OrderService {
     private List<Provider> providerList;
     private OrderService orderService;
     private ProviderService providerService;
+    private CustomerService customerService;
     private boolean complete;
 
 
@@ -39,7 +41,11 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersByCustomer(long id) {
-        return (List<Order>) orderRepository.findAll();
+        return orderRepository.findAllByCustomer(customerService.getCustomer(id).get());
+    }
+
+    public List<Order> getAllOrdersByProvider(long id) {
+        return orderRepository.findAllByProvider(providerService.getProvider(id).get());
     }
 
     public Optional<Order> getOrder(long id) {
