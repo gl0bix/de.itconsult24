@@ -18,6 +18,8 @@ public class ProviderService {
     private final ProviderRepository providerRepository;
     private Order order;
 
+    public Optional<Provider> getProviderByEmail(String email) {return providerRepository.findByEmail(email);}
+
     public List<Provider> getallProviders() {
         return (List<Provider>) providerRepository.findAll();
     }
