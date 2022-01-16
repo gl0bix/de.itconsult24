@@ -6,10 +6,11 @@
 </head>
 <body>
 	<div layout:fragment="content">
-        <h1>Konto</h1>
+		<h1>Konto</h1>
 
-        <a class="btn btn-primary" th:href="@{/data/customer}">Nutzerdaten</a>
-        <a class="btn btn-primary" th:href="@{questionnaire}">Neuer Auftrag</a>
-    </div>
+		<a class="btn btn-bd-primary" th:href="@{/data/customer}">Nutzerdaten</a>
+		<a class="btn btn-bd-primary" th:href="@{questionnaire}">Neuer Auftrag</a>
+		<a class="btn btn-bd-primary" th:href="@{/data/customer/orders}">Aktive Auftraege</a>
+	</div>
 </body>
 </html>

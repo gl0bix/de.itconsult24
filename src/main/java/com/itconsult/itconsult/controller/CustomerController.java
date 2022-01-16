@@ -91,6 +91,21 @@ public class CustomerController {
 
         return "account/customer_data";
     }
+
+    @GetMapping("/data/customer/orders")
+    public String showCustomerOrders(Authentication authentication, Model model) {
+
+        Optional<Customer> customer = customerService.getCustomerByEmail(authentication.getName());
+
+        if (authentication.isAuthenticated() && customer.isPresent()) {
+            model.addAttribute("customer", customer.get());
+        } else
+            return "redirect:/login";
+
+        return "account/customer_order_data";
+    }
+
+
 }
 
 
