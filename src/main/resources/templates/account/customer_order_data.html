@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Aktive Auftraege</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Aktive Auftraege</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titel</th>
+            <th>Beschreibung</th>
+            <th>Datum</th>
+            <th> </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>001</td>
+            <td>Order XY</td>
+            <td>Erstellen einer Homepage</td>
+            <td>23.12.2021</td>
+            <td><input class='myclass' type='button' value='Details'/></td>
+
+        </tr>
+        <tr>
+            <td>002</td>
+            <td>Order XX</td>
+            <td>Drucker einrichten</td>
+            <td>12.02.2021</td>
+            <td><input class='myclass' type='button' value='Details'/></td>
+
+        </tr>
+        </tbody>
+    </table>
+    </table>
+</div>
+</body>
+</html>
