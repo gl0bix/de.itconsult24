@@ -2,45 +2,42 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-    <title>Meine Auftraege</title>
+    <title>Aktive Auftraege</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2>Meine Auftraege</h2>
+    <h1>Aktive Auftraege</h1>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>ID</th>
             <th>Titel</th>
             <th>Beschreibung</th>
-            <th>Status</th>
             <th>Datum</th>
             <th> </th>
 
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order: ${orderList}">
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.title}"></td>
-            <td th:text="${order.description}"></td>
-            <td th:text="${order.orderStatus}"></td>
-            <td th:text="${order.date}"></td>
-            <td><a th:href="@{/data/customer/orders/details/{orderID}(orderID=${order.id})}">
-
-                <button>Details</button>
-            </a></td>
+        <tr>
+            <td>001</td>
+            <td>Order XY</td>
+            <td>Erstellen einer Homepage</td>
+            <td>23.12.2021</td>
+            <td><input class='myclass' type='button' value='Details'/></td>
 
         </tr>
+        <tr>
+            <td>002</td>
+            <td>Order XX</td>
+            <td>Drucker einrichten</td>
+            <td>12.02.2021</td>
+            <td><input class='myclass' type='button' value='Details'/></td>
 
+        </tr>
         </tbody>
     </table>
-    <p><br><br><br> </p>
-
-
-
-    </div>
-
+    </table>
 </div>
 </body>
 </html>
