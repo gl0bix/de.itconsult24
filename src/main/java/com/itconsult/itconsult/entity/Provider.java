@@ -20,7 +20,6 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @Enumerated(EnumType.ORDINAL)
     private OrderType orderType;
     private String street;
     private String postalCode;

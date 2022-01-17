@@ -23,16 +23,5 @@ public class Order {
     private String description;
     @Enumerated(EnumType.ORDINAL)
     private OrderStatus orderStatus;
-    @Enumerated(EnumType.ORDINAL)
-    private OrderType orderType;
-
-    //relations
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "provider_id")
-    private Provider provider;
 
 }
