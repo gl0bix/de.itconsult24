@@ -1,8 +1,12 @@
 package com.itconsult.itconsult.entity;
 
+import com.itconsult.itconsult.enums.OrderType;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.util.Set;
+
 
 @Data
 @Builder
@@ -10,13 +14,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "")
+@Entity(name = "provider")
 public class Provider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String competence;
+    private OrderType orderType;
     private String street;
     private String postalCode;
     private String city;
@@ -27,4 +31,8 @@ public class Provider {
     @Column(nullable = false, length = 128)
     private String password;
     private boolean enabled;
+
+    //relations
+    @OneToMany(mappedBy = "provider")
+    private Set<Order> orders;
 }

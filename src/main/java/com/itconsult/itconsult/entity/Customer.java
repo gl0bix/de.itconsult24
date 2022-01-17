@@ -3,6 +3,8 @@ package com.itconsult.itconsult.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,6 +24,13 @@ public class Customer {
     private String postalCode;
     private String city;
     private String country;
+
+    //relations
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Questionnaire> questionnaire;
 
     //  auth requirements
 

@@ -1,10 +1,13 @@
 package com.itconsult.itconsult.entity;
 
-import com.itconsult.itconsult.types.OrderType;
+
+import com.itconsult.itconsult.enums.OrderType;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
+
 
 @Data
 @Builder
@@ -12,7 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "")
+@Entity(name = "questionnaire")
 public class Questionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +25,31 @@ public class Questionnaire {
     private OrderType orderType;
     private String urgency;
     private String duration;
+    private Date date;
 
     @Column(length = 1000)
     @Size(max = 1000)
-    private String CompanyDescription;
+    private String companyDescription;
     @Column(length = 1000)
     @Size(max = 1000)
-    private String ProblemDescription;
+    private String problemDescription;
 
+    /**
+     * 10 Strings for Questions -> Questionnaire.md starting 6.
+     */
+    private String typeOfAttack;    //Art des Angriffs
+    private String typeOfMeasure;   //Art der Maßnahme
+    private String typeOfDevices;   //Art der Leistung (Hardware)
+    private String typeOfSoftware;  //Art der Leistung (Software)
+    private String typeOfCloud;     //Cloud-Bereich
+    private String network;         //Art der Leistung (Netzwerk)
+    private String networkDetails;  //Details zum Netzwerkpunkt
+    private String projectStatus;   //Softwareentwicklung: Projektstatus
+    private String typeOfProject;   //Softwareentwicklung: Projektbereich
+    private String systemadmin;     //Systemadministration
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
 }
