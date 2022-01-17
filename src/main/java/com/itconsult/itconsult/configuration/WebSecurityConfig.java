@@ -1,23 +1,27 @@
 package com.itconsult.itconsult.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itconsult.itconsult.security.CustomerDetailsService;
+import com.itconsult.itconsult.security.ProviderDetailsService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private CustomerDetailsService customerDetailsService;
+    private ProviderDetailsService providerDetailsService;
 
     @Override
-    protected UserDetailsService userDetailsService() {
-        return userDetailsService;
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customerDetailsService);
+        auth.userDetailsService(providerDetailsService);
     }
 
     @Override
@@ -26,13 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**", "/webjars/**", "/bootstrap/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/", "/home", "/register/**", "/success_register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/account")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

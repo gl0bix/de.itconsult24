@@ -5,9 +5,9 @@ import com.itconsult.itconsult.entity.Order;
 import com.itconsult.itconsult.entity.Provider;
 import com.itconsult.itconsult.entity.Questionnaire;
 import com.itconsult.itconsult.enums.OrderStatus;
-
 import com.itconsult.itconsult.enums.OrderType;
 import com.itconsult.itconsult.repository.OrderRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -49,6 +49,7 @@ public class OrderService {
     }
 
     public Optional<Order> getOrder(long id) {
+
         return orderRepository.findById(id);
     }
 
