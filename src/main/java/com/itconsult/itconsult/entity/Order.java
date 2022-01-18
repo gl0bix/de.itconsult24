@@ -21,7 +21,9 @@ public class Order {
     private String title;
     private Date date;
     private String description;
+    @Enumerated(EnumType.ORDINAL)
     private OrderStatus orderStatus;
+    @Enumerated(EnumType.ORDINAL)
     private OrderType orderType;
 
     //relations
@@ -30,7 +32,7 @@ public class Order {
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "provider_id", nullable = false)
+    @JoinColumn(name = "provider_id")
     private Provider provider;
 
 }

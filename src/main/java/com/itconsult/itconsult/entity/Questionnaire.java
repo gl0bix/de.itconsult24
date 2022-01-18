@@ -22,6 +22,7 @@ public class Questionnaire {
     @Setter(AccessLevel.NONE)
     private long id;
 
+    @Enumerated(EnumType.ORDINAL)
     private OrderType orderType;
     private String urgency;
     private String duration;
