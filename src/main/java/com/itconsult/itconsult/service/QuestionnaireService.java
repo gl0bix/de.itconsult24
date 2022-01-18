@@ -1,7 +1,7 @@
 package com.itconsult.itconsult.service;
 
 
-import com.itconsult.itconsult.types.OrderType;
+import com.itconsult.itconsult.enums.OrderType;
 import com.itconsult.itconsult.entity.Questionnaire;
 import com.itconsult.itconsult.repository.QuestionnaireRepository;
 import lombok.AllArgsConstructor;
@@ -31,8 +31,8 @@ public class QuestionnaireService {
         return questionnaireRepository.save(Questionnaire.builder()
                 .urgency(urgency)
                 .duration(duration)
-                .CompanyDescription(CompanyDescription)
-                .ProblemDescription(ProblemDescription)
+                .companyDescription(CompanyDescription)
+                .problemDescription(ProblemDescription)
                 .orderType(orderType)
                 .build());
 

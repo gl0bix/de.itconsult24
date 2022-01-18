@@ -53,7 +53,7 @@ public class ProviderService {
         }
         providerRepository.save(Provider.builder()
                 .name(form.getCompany())
-                .competence(form.getCompetence())
+                //.competence(form.getCompetence())
                 .street(form.getStreet())
                 .postalCode(form.getPostalCode())
                 .city(form.getCity())

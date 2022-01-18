@@ -41,7 +41,7 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersByCustomer(long id) {
-        return orderRepository.findAllByCustomer(customerService.getCustomer(id).get());
+        return orderRepository.findAllByCustomer(customerService.getCustomerById(id).get());
     }
 
     public List<Order> getAllOrdersByProvider(long id) {
