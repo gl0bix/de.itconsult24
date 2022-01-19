@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-    <title>Aktive Auftraege</title>
+    <title>Meine Auftraege</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2>Aktive Auftraege</h2>
+    <h2>Meine Auftraege</h2>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -26,7 +26,7 @@
             <td>Erstellen einer Homepage</td>
             <td>in bearbeitung</td>
             <td>23.12.2021</td>
-            <td><a th:href="@{/data/customer}">
+            <td><a th:href="@{/data/customer/orders/details}">
                 <button>Details</button>
             </a></td>
 
@@ -37,7 +37,7 @@
             <td>Drucker einrichten</td>
             <td>abgeschlossen</td>
             <td>12.02.2021</td>
-            <td><a th:href="@{/data/customer}">
+            <td><a th:href="@{/data/customer/orders/details}">
                 <button>Details</button>
             </a></td>
 
@@ -47,52 +47,7 @@
     <p><br><br><br> </p>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Titel</th>
-                            <td><span>Order XY</span></td> <!-- th:text="${order.name}" -->
-                        </tr>
-                        <tr>
-                            <th>Kategorie</th>
-                            <td><span>Software</span></td>
-                        </tr>
-                        <tr>
-                            <th>Beschreibung</th>
-                            <td><span></span></td>
-                        </tr>
-                        <tr>
-                            <th>Status</th>
-                            <td><span></span></td>
-                        </tr>
-                        <tr>
-                            <th>Dienstleister</th>
-                            <td><span>
-                                <select>
-                            <option value=””>option1</option>
-                            <option value=””>option2</option>
-                            <option value=””>option3</option>
-                            <option value=””>option3</option>
-                            </select>
-                            </span></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><button>Bestaetigen</button></td>
-                            <td><span><button>Bearbeiten</button></span></td>
-                        </tr>
 
-
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>
