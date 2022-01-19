@@ -13,31 +13,32 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="table-responsive">
-                        <table th:object="${order}" class="table table-striped">
+                        <table class="table table-striped">
                             <tr>
                                 <th>Titel</th>
-                                <td><span th:text="*{title}" ></span></td> <!-- th:text="${order.name}" -->
+                                <td><span>Order XY</span></td> <!-- th:text="${order.name}" -->
                             </tr>
                             <tr>
                                 <th>Kategorie</th>
-                                <td><span th:text="*{orderType.value}"></span></td>
+                                <td><span>Software</span></td>
                             </tr>
                             <tr>
                                 <th>Beschreibung</th>
-                                <td><span th:text="*{description}"></span></td>
+                                <td><span></span></td>
                             </tr>
                             <tr>
                                 <th>Status</th>
-                                <td><span th:text="*{orderStatus}"></span></td>
+                                <td><span></span></td>
                             </tr>
                             <tr>
                                 <th>Dienstleister</th>
                                 <td><span>
-                                <select id="selectProvider" class="form-select">
-                                    <option th:each="provider : ${provider}"
-                                    th:value="${provider.name}" th:text="${provider.name}" (providerID="${provider.id}")></option>
+                                <select>
+                            <option value=””>option1</option>
+                            <option value=””>option2</option>
+                            <option value=””>option3</option>
+                            <option value=””>option3</option>
                             </select>
-
                             </span></td>
                             </tr>
                             <tr>
@@ -45,8 +46,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-
-                                <td><span th:action="@{appove_provider/{providerID}}"><button type="button" class="btn btn-lg btn-primary" disabled>Dienstleister bestätigen</button></span></td>
+                                <td><button>Bestaetigen</button></td>
+                                <td><span><button>Bearbeiten</button></span></td>
                             </tr>
 
 
