@@ -23,14 +23,14 @@
                         <div class="form-group mb-2">
                             <label for="selectOrderType" class="form-label">Zu welchem Bereich gehört Ihr IT-Problem?
                                 *</label>
-                            <select id="selectOrderType" class="form-control form-control-lg" name="orderType">
+                            <select id="selectOrderType" class="form-select" name="orderType">
                                 <option th:each="orderType : ${T(com.itconsult.itconsult.enums.OrderType).values()}"
                                         th:value="${orderType}" th:text="${orderType.value}"></option>
                             </select>
                         </div>
                         <div class="form-group mb-2">
                             <label class="form-label">Wie eilig ist Ihr Anliegen? *</label>
-                            <select class="form-control" name="urgency">
+                            <select class="form-select" name="urgency">
                                 <option value="veryUrgent">
                                     sehr eilig
                                 </option>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group mb-2">
                             <label class="form-label">Wie schätzen Sie den Umfang Ihres Anliegens ein? *</label>
-                            <select class="form-control" name="volume">
+                            <select class="form-select" name="volume">
                                 <option value="shortCommission">
                                     Kurzauftrag
                                 </option>
@@ -82,7 +82,7 @@
                             <div class="form-group mb-2">
                                 <label class="form-label">Sicherheitsarchitektur: Art der Maßnahme (eigene Eingabe
                                     möglich)</label>
-                                <input class="form-control" type="text" list="securityArchitecture"
+                                <input class="form-select" type="text" list="securityArchitecture"
                                        name="typeOfMeasure">
                                 <datalist class="form-control" id="securityArchitecture" hidden>
                                     <option value="allgemeines Sicherheitskonzept"></option>
@@ -95,7 +95,7 @@
                             <div class="form-group mb-2">
                                 <label class="form-label">Akuter Sicherheitsfall: Art des Angriffs (eigene Eingabe
                                     möglich)</label>
-                                <input class="form-control" type="text" list="typeOfAttack" name="typeOfAttack">
+                                <input class="form-select" type="text" list="typeOfAttack" name="typeOfAttack">
                                 <datalist class="form-control" id="typeOfAttack" hidden>
                                     <option value="Ransomware"></option>
                                     <option value="DOS oder DDOS"></option>
@@ -105,7 +105,7 @@
                             </div>
                             <div class="form-group mb-2">
                                 <label>Hardware: Art der Leistung (eigene Eingabe möglich)</label>
-                                <input class="form-control" type="text" list="hardware" name="typeOfDevices">
+                                <input class="form-select" type="text" list="hardware" name="typeOfDevices">
                                 <datalist class="form-control" id="hardware" hidden>
                                     <option value="PCs">PCs</option>
                                     <option value="Telefonanlage"></option>
@@ -116,7 +116,7 @@
                             <div class="form-group mb-2">
                                 <label class="form-label">Leistung, Skalierung: Art der Leistung (eigene Eingabe
                                     möglich)</label>
-                                <input class="form-control" type="text" list="scalability" name="typeOfSoftware">
+                                <input class="form-select" type="text" list="scalability" name="typeOfSoftware">
                                 <datalist class="form-control" id="scalability" hidden>
                                     <option value="Content Distribution"></option>
                                     <option value="Performance Testing"></option>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-label">Cloud: Art der Leistung (eigene Eingabe möglich)</label>
-                                <input class="form-control" type="text" list="cloud" name="typeOfCloud">
+                                <input class="form-select" type="text" list="cloud" name="typeOfCloud">
                                 <datalist class="form-control" id="cloud" hidden>
                                     <option value="IaS (Infrastructure as a Service)"></option>
                                     <option value="PaS (Platform as a Service)"></option>
@@ -135,7 +135,7 @@
                             <div class="form-group mb-2">
                                 <label class="form-label">internes Netzwerk: Art der Leistung (eigene Eingabe
                                     möglich)</label>
-                                <input class="form-control" type="text" list="network" name="typeOfCloud">
+                                <input class="form-select" type="text" list="network" name="typeOfCloud">
                                 <datalist class="form-control" id="network" hidden>
                                     <option value="Aufbau"></option>
                                     <option value="Erweiterung"></option>
@@ -147,7 +147,7 @@
                             <div class="form-group mb-2">
                                 <label class="form-label">Software Development: Projektstatus (eigene Eingabe
                                     möglich)</label>
-                                <input class="form-control" type="text" list="softwareDevelopment-status"
+                                <input class="form-select" type="text" list="softwareDevelopment-status"
                                        name="projectStatus">
                                 <datalist class="form-control" id="softwareDevelopment-status" hidden>
                                     <option value="neues Projekt"></option>
@@ -157,7 +157,7 @@
                             <div class="form-group mb-2">
                                 <label class="form-label">Software Development: Projektbereich (eigene Eingabe
                                     möglich)</label>
-                                <input class="form-control" type="text" list="softwareDevelopment-type"
+                                <input class="form-select" type="text" list="softwareDevelopment-type"
                                        name="typeOfProject">
                                 <datalist class="form-control" id="softwareDevelopment-type" hidden>
                                     <option value="Webanwendung"></option>

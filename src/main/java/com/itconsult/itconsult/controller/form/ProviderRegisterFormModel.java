@@ -21,8 +21,7 @@ public class ProviderRegisterFormModel {
     @NotEmpty(message = "Das Feld Firmenname darf nicht leer sein")
     private String company;
     @NotNull
-    @NotEmpty(message = "Das Feld Branche darf nicht leer sein")
-    private OrderType competence;
+    private OrderType orderType;
     @NotNull
     @NotEmpty(message = "Das Feld Email darf nicht leer sein")
     @Email
