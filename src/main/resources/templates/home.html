@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout.html}" lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +13,7 @@
 
     <p>Herzlich Willkommen!</p>
 
-    <div class="row">
+    <div class="row" sec:authorize="!isAuthenticated()">
         <div class="col">
             <label for="customerRegister">Registrieren als Kunde:</label>
             <a class="btn btn-primary" id="customerRegister" type="button" th:href="@{/register/customer}"><i
@@ -24,8 +25,11 @@
                     class="bi bi-arrow-right-square"></i></a>
         </div>
     </div>
+    <div sec:authorize="isAuthenticated()">
+        <a class="btn btn-primary" th:href="@{/account}">Mein Konto</a>
+    </div>
     <hr>
-    <div class="row">
+    <div class="row" sec:authorize="!isAuthenticated()">
         <p> Schon registriert? <a th:href="@{/login}">Hier anmelden</a></p>
     </div>
 </div>

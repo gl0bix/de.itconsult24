@@ -1,5 +1,6 @@
 package com.itconsult.itconsult.controller.form;
 
+import com.itconsult.itconsult.enums.OrderType;
 import com.itconsult.itconsult.security.passwordValidation.PasswordMatches;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +21,7 @@ public class ProviderRegisterFormModel {
     @NotEmpty(message = "Das Feld Firmenname darf nicht leer sein")
     private String company;
     @NotNull
-    @NotEmpty(message = "Das Feld Branche darf nicht leer sein")
-    private String competence;
+    private OrderType orderType;
     @NotNull
     @NotEmpty(message = "Das Feld Email darf nicht leer sein")
     @Email
