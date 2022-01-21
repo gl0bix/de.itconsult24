@@ -28,7 +28,8 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label>Kompetenzbereich</label>
-                                <select id="selectOrderType" class="form-select" name="orderType">
+                                <select id="selectOrderType" class="form-select" name="orderType"
+                                        th:field="*{orderType}">
                                     <option th:each="orderType : ${T(com.itconsult.itconsult.enums.OrderType).values()}"
                                             th:value="${orderType}" th:text="${orderType.value}"></option>
                                 </select>

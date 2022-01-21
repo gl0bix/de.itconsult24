@@ -1,8 +1,8 @@
 package com.itconsult.itconsult.service;
 
 
+import com.itconsult.itconsult.controller.form.QuestionnaireFormModel;
 import com.itconsult.itconsult.entity.Questionnaire;
-import com.itconsult.itconsult.enums.OrderType;
 import com.itconsult.itconsult.repository.QuestionnaireRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,25 +15,36 @@ import java.util.Optional;
 @AllArgsConstructor
 public class QuestionnaireService {
     private final QuestionnaireRepository questionnaireRepository;
-    private OrderService orderService;
+    private final OrderService orderService;
 
     public Questionnaire getEmptyQuestionnaire() {
         return new Questionnaire();
     }
 
-    public Optional<Questionnaire> getQuestionnaire(long id){
+    public Optional<Questionnaire> getQuestionnaire(long id) {
         return questionnaireRepository.findById(id);
     }
 
-    public Questionnaire createOrderFromQuestionnaire(String urgency, String duration, String CompanyDescription,
-                                                      String ProblemDescription, OrderType orderType) {
-        return questionnaireRepository.save(Questionnaire.builder()
-                .urgency(urgency)
-                .duration(duration)
-                .companyDescription(CompanyDescription)
-                .problemDescription(ProblemDescription)
-                .orderType(orderType)
+    public void createOrderFromQuestionnaire(QuestionnaireFormModel form) {
+        final var questionnaire = questionnaireRepository.save(Questionnaire.builder()
+                .orderType(form.getOrderType())
+                .urgency(form.getUrgency())
+                .duration(form.getDuration())
+                .companyDescription(form.getCompanyDescription())
+                .problemDescription(form.getProblemDescription())
+                .typeOfMeasure(form.getTypeOfMeasure())
+                .typeOfAttack(form.getTypeOfAttack())
+                .typeOfDevices(form.getTypeOfDevices())
+                .typeOfSoftware(form.getTypeOfSoftware())
+                .typeOfCloud(form.getTypeOfCloud())
+                .network(form.getNetwork())
+                .networkDetails(form.getNetworkDetails())
+                .projectStatus(form.getProjectStatus())
+                .typeOfProject(form.getTypeOfProject())
+                .systemadmin(form.getSystemAdmin())
+                .customer(form.getCustomer())
                 .build());
 
+//        orderService.createOrderFromQuestionnaire(questionnaire);
     }
 }
