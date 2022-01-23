@@ -38,6 +38,11 @@ public class OrderService {
         return orderRepository.findAllByProvider(providerService.getProvider(id).get());
     }
 
+    public Order findOrder(long id){
+
+        return orderRepository.findOrderById(id);
+    }
+
     public Optional<Order> getOrder(long id) {
 
         return orderRepository.findById(id);
