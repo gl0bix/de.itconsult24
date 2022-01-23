@@ -1,5 +1,6 @@
 package com.itconsult.itconsult.controller.form;
 
+import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.enums.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,23 +16,23 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class QuestionnaireFormModel {
 
-    @NotNull
+    @NotNull(message = "orderType null")
     private OrderType orderType;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "urgency null")
+    @NotEmpty(message = "urgency empty")
     private String urgency;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "duration null")
+    @NotEmpty(message = "duration empty")
     private String duration;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "companyDescription null")
+    @NotEmpty(message = "Die Unternehmensbeschreibung darf nicht leer sein")
     private String companyDescription;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "problemDescription null")
+    @NotEmpty(message = "Die Problembeschreibung darf nicht leer sein")
     private String problemDescription;
 
     private String typeOfMeasure;   //Art der Maßnahme
@@ -45,5 +46,6 @@ public class QuestionnaireFormModel {
     private String typeOfProject;   //Softwareentwicklung: Projektbereich
     private String systemAdmin;     //Systemadministration
 
+    private Customer customer;
 
 }

@@ -2,8 +2,11 @@ package com.itconsult.itconsult.controller;
 
 
 import com.itconsult.itconsult.controller.form.QuestionnaireFormModel;
+import com.itconsult.itconsult.security.CustomerDetails;
+import com.itconsult.itconsult.service.CustomerService;
 import com.itconsult.itconsult.service.QuestionnaireService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,8 @@ import javax.validation.Valid;
 public class QuestionnaireController {
 
     private final QuestionnaireService questionnaireService;
+    private final CustomerService customerService;
+
 
     @GetMapping("/questionnaire")
     public String showQuestionnaireForm(Model model) {
@@ -27,15 +32,24 @@ public class QuestionnaireController {
     }
 
     @PostMapping("/questionnaire")
-    public String getFilledQuestionnaire(@ModelAttribute("questionnaire") @Valid QuestionnaireFormModel questionnaire,
-                                         BindingResult result) {
+    public String submitQuestionnaire(@ModelAttribute("questionnaire") @Valid QuestionnaireFormModel questionnaireFormModel,
+                                      BindingResult result, Authentication authentication) {
+
+        System.out.println(questionnaireFormModel);
+
         if (result.hasErrors()) {
             return "questionnaire";
         }
 
-        System.out.println(questionnaire);
+        //fetch customer from context
+        final var customerDetails = (CustomerDetails) authentication.getPrincipal();
+        final var customer = customerService.getCustomerByEmail(customerDetails.getUsername()).get();
 
-        //TODO: call questionnaireService to handle questionnaire
+        questionnaireFormModel.setCustomer(customer);
+
+        System.out.println(questionnaireFormModel);
+
+        questionnaireService.createOrderFromQuestionnaire(questionnaireFormModel);
 
         return "redirect:account_customer";
     }

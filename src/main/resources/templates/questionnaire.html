@@ -23,15 +23,15 @@
                         <div class="form-group mb-2">
                             <label for="selectOrderType" class="form-label">Zu welchem Bereich gehört Ihr IT-Problem?
                                 *</label>
-                            <select id="selectOrderType" class="form-select" name="orderType">
+                            <select id="selectOrderType" class="form-select" th:field="*{orderType}">
                                 <option th:each="orderType : ${T(com.itconsult.itconsult.enums.OrderType).values()}"
                                         th:value="${orderType}" th:text="${orderType.value}"></option>
                             </select>
                         </div>
                         <div class="form-group mb-2">
                             <label class="form-label">Wie eilig ist Ihr Anliegen? *</label>
-                            <select class="form-select" name="urgency">
-                                <option value="veryUrgent">
+                            <select class="form-select" th:object="${questionnaire}" th:field="*{urgency}">
+                                <option value="veryUrgent" selected>
                                     sehr eilig
                                 </option>
                                 <option value="urgent">
@@ -47,8 +47,8 @@
                         </div>
                         <div class="form-group mb-2">
                             <label class="form-label">Wie schätzen Sie den Umfang Ihres Anliegens ein? *</label>
-                            <select class="form-select" name="volume">
-                                <option value="shortCommission">
+                            <select class="form-select" name="volume" th:field="*{duration}">
+                                <option value="shortCommission" selected>
                                     Kurzauftrag
                                 </option>
                                 <option value="middleTermProjekt">
@@ -65,6 +65,7 @@
                         <div class="form-group mb-2">
                             <label>Bitte geben Sie uns eine kurze Beschreibung Ihres Unternehmens/Projektes *</label>
                             <textarea class="form-control" name="customerDescription"
+                                      th:field="*{companyDescription}"
                                       placeholder="Unternehmensbeschreibung"
                                       required="required"></textarea>
                         </div>
@@ -72,6 +73,7 @@
                             <label class="form-label">Hier können Sie Ihr Anliegen in eigenen Worten
                                 beschreiben/ergänzen. *</label>
                             <textarea class="form-control" name="problemDescription" placeholder=""
+                                      th:field="*{problemDescription}"
                                       required="required"></textarea>
                         </div>
                         <small>Felder markiert mit * sind Pflichtfelder.</small>

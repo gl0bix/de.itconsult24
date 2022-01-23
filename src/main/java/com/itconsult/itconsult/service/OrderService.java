@@ -7,10 +7,8 @@ import com.itconsult.itconsult.entity.Questionnaire;
 import com.itconsult.itconsult.enums.OrderStatus;
 import com.itconsult.itconsult.enums.OrderType;
 import com.itconsult.itconsult.repository.OrderRepository;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,20 +19,14 @@ import java.util.stream.Collectors;
 @Service
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class OrderService {
-    private OrderRepository orderRepository;
-    private Questionnaire questionnaire;
-    private Order order;
-    private Provider provider;
+    private final OrderRepository orderRepository;
     private List<Provider> providerList;
-    private OrderService orderService;
-    private ProviderService providerService;
-    private CustomerService customerService;
-    private boolean complete;
+    private final ProviderService providerService;
+    private final CustomerService customerService;
 
 
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
         return (List<Order>) orderRepository.findAll();
     }
 
@@ -65,27 +57,31 @@ public class OrderService {
     public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
         return orderRepository.save(Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
-                .description(questionnaire.getProblemDescription())
+                .description(questionnaire.getProblemDescription()) //TODO: add additional dat from questionnaire
+                .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
                 .orderType(questionnaire.getOrderType())
                 .customer(questionnaire.getCustomer())
                 .build());
+
+        //TODO: hier Aufruf um passende Provider nach OrderType zu finden und als Id-Liste in Order zu speichern
     }
 
 
-    public void searchProvider() {
+    public void searchProvider(Order order) { //TODO: return value missing/ get providerList from Service
         providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
     }
 
-    public boolean orderComplete() {
+    public boolean orderComplete(Order order) {
         return (order.getOrderType() != null && order.getOrderStatus() != null
                 && order.getDate() != null && order.getTitle() != null && order.getDescription() != null
                 && order.getCustomer() != null);
     }
 
-    public void commissionOrder(long orderId, String providerEmail){
-        if (providerEmail != null){
-            if (getOrder(orderId).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()){
+    public void commissionOrder(long orderId, String providerEmail) { //TODO save Order to database (repository.save())
+
+        if (providerEmail != null) {
+            if (getOrder(orderId).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
                 getOrder(orderId).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
             }
         }
