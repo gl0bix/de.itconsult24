@@ -56,9 +56,11 @@ public class OrderService {
     }
 
     public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
+        //TODO: add additional dat from questionnaire
+        //TODO-CHECKED
         return orderRepository.save(Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
-                .description(questionnaire.getProblemDescription()) //TODO: add additional dat from questionnaire
+                .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
                 .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
                 .orderType(questionnaire.getOrderType())
@@ -73,10 +75,18 @@ public class OrderService {
         providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
     }
 
-    public boolean orderComplete(Order order) {
-        return (order.getOrderType() != null && order.getOrderStatus() != null
-                && order.getDate() != null && order.getTitle() != null && order.getDescription() != null
-                && order.getCustomer() != null);
+
+    //TODO: @Parameter orderId, pull Order from repo
+    //TODO-CHECKED
+    public boolean orderComplete(long orderId) {
+
+        if (getOrder(orderId).isPresent()) {
+            Order order = getOrder(orderId).get();
+            return (order.getOrderType() != null && order.getOrderStatus() != null
+                    && order.getDate() != null && order.getTitle() != null && order.getDescription() != null
+                    && order.getCustomer() != null);
+        }
+        return false;
     }
 
     public void commissionOrder(long id, String providerEmail) {
@@ -86,56 +96,68 @@ public class OrderService {
         if (providerEmail != null) {
             if (getOrder(id).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
                 getOrder(id).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
-                getOrder(id).get().setOrderStatus(OrderStatus.IN_PROGRESS);
+                changeOrderStatus(OrderStatus.IN_PROGRESS, getOrder(id).get()); //TODO: Use changeOrderStatus => CHECK
                 orderRepository.save(getOrder(id).get());
             }
         }
     }
 
-    private String descriptionToString(Questionnaire questionnaire){
+    //TODO-CHECKED: Create Method SetStatusToFullfilled
+    public void setStatusToFullfilled(long orderId) {
+        if (getOrder(orderId).isPresent()) {
+            changeOrderStatus(OrderStatus.FULFILLED, getOrder(orderId).get());
+        }
+    }
+
+    //TODO-CHECKED: Create Method SetStatusToDiscarded
+    public void setStatusToDiscarded(long orderId) {
+        if (getOrder(orderId).isPresent()) {
+            changeOrderStatus(OrderStatus.DISCARDED, getOrder(orderId).get());
+        }
+    }
+
+    //TODO-CHECKED: changeOrderStatus()
+    private void changeOrderStatus(OrderStatus status, Order order) {
+        if (order != null) {
+            order.setOrderStatus(status);
+        }
+    }
+
+
+    //descriptions implemented in createOrderFromQuestionnaire()
+    private String descriptionToString(Questionnaire questionnaire) {
         StringBuffer desc = new StringBuffer();
 
-        if(questionnaire.getTypeOfAttack() != null)
+        if (questionnaire.getTypeOfAttack() != null)
             desc.append("\nType of Attack: " + questionnaire.getTypeOfAttack());
 
-        if(questionnaire.getTypeOfMeasure() != null)
+        if (questionnaire.getTypeOfMeasure() != null)
             desc.append("\nType of Measure: " + questionnaire.getTypeOfMeasure());
 
-        if(questionnaire.getTypeOfDevices() != null)
+        if (questionnaire.getTypeOfDevices() != null)
             desc.append("\nType of Devices: " + questionnaire.getTypeOfDevices());
 
-        if(questionnaire.getTypeOfSoftware() != null)
+        if (questionnaire.getTypeOfSoftware() != null)
             desc.append("\nType of Software: " + questionnaire.getTypeOfSoftware());
 
-        if(questionnaire.getTypeOfCloud() != null)
+        if (questionnaire.getTypeOfCloud() != null)
             desc.append("\nType of Cloud: " + questionnaire.getTypeOfCloud());
 
-        if(questionnaire.getNetwork() != null)
+        if (questionnaire.getNetwork() != null)
             desc.append("\nNetwork: " + questionnaire.getNetwork());
 
-        if(questionnaire.getNetworkDetails() != null)
+        if (questionnaire.getNetworkDetails() != null)
             desc.append("\nNetwork details: " + questionnaire.getNetworkDetails());
 
-        if(questionnaire.getProjectStatus() != null)
+        if (questionnaire.getProjectStatus() != null)
             desc.append("\nProject status: " + questionnaire.getProjectStatus());
 
-        if(questionnaire.getTypeOfProject() != null)
+        if (questionnaire.getTypeOfProject() != null)
             desc.append("\nType of Project: " + questionnaire.getTypeOfProject());
 
-        if(questionnaire.getSystemadmin() != null)
+        if (questionnaire.getSystemadmin() != null)
             desc.append("\nSystemadmin: " + questionnaire.getSystemadmin());
 
         return desc.toString();
     }
-
-
-
-    /**
-     * TODO
-     * CustomerService aufrufen, falls neue Order
-     * propose Order
-     *
-     * OrderService Boolean, ob Order vollständig (CHECKED)
-     * OrderService: commissionOrder(order id) (CHECKED)
-     */
 }
