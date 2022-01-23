@@ -78,13 +78,25 @@ public class OrderService {
                 && order.getCustomer() != null);
     }
 
-    public void commissionOrder(long orderId, String providerEmail) { //TODO save Order to database (repository.save())
+    public void commissionOrder(long id, String providerEmail) {
 
+        //TODO save Order to database (repository.save())
+        // TODO-CHECK
         if (providerEmail != null) {
-            if (getOrder(orderId).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
-                getOrder(orderId).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
+            if (getOrder(id).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
+                getOrder(id).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
+                getOrder(id).get().setOrderStatus(OrderStatus.IN_PROGRESS);
+                orderRepository.save(getOrder(id).get());
             }
         }
+    }
+
+    private String descriptionToString(){
+        StringBuffer desc = new StringBuffer();
+
+        desc.
+
+        return desc;
     }
 
 
