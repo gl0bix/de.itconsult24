@@ -24,6 +24,7 @@ public class OrderService {
     private List<Provider> providerList;
     private final ProviderService providerService;
     private final CustomerService customerService;
+    private final QuestionnaireService questionnaireService;
 
 
     public List<Order> getAllOrders() {
@@ -91,12 +92,40 @@ public class OrderService {
         }
     }
 
-    private String descriptionToString(){
+    private String descriptionToString(Questionnaire questionnaire){
         StringBuffer desc = new StringBuffer();
 
-        desc.
+        if(questionnaire.getTypeOfAttack() != null)
+            desc.append("\nType of Attack: " + questionnaire.getTypeOfAttack());
 
-        return desc;
+        if(questionnaire.getTypeOfMeasure() != null)
+            desc.append("\nType of Measure: " + questionnaire.getTypeOfMeasure());
+
+        if(questionnaire.getTypeOfDevices() != null)
+            desc.append("\nType of Devices: " + questionnaire.getTypeOfDevices());
+
+        if(questionnaire.getTypeOfSoftware() != null)
+            desc.append("\nType of Software: " + questionnaire.getTypeOfSoftware());
+
+        if(questionnaire.getTypeOfCloud() != null)
+            desc.append("\nType of Cloud: " + questionnaire.getTypeOfCloud());
+
+        if(questionnaire.getNetwork() != null)
+            desc.append("\nNetwork: " + questionnaire.getNetwork());
+
+        if(questionnaire.getNetworkDetails() != null)
+            desc.append("\nNetwork details: " + questionnaire.getNetworkDetails());
+
+        if(questionnaire.getProjectStatus() != null)
+            desc.append("\nProject status: " + questionnaire.getProjectStatus());
+
+        if(questionnaire.getTypeOfProject() != null)
+            desc.append("\nType of Project: " + questionnaire.getTypeOfProject());
+
+        if(questionnaire.getSystemadmin() != null)
+            desc.append("\nSystemadmin: " + questionnaire.getSystemadmin());
+
+        return desc.toString();
     }
 
 
