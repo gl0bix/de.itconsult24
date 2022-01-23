@@ -3,16 +3,17 @@ package com.itconsult.itconsult.controller;
 import com.itconsult.itconsult.controller.form.CustomerFormModel;
 import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
 import com.itconsult.itconsult.entity.Customer;
+import com.itconsult.itconsult.entity.Order;
 import com.itconsult.itconsult.service.CustomerService;
 import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
+import com.itconsult.itconsult.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,6 +24,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
+    private final OrderService orderService;
+
 
     @Deprecated
     @GetMapping("customers")
@@ -102,11 +105,16 @@ public class CustomerController {
         } else
             return "redirect:/login";
 
+
+        List<Order> orderList = orderService.getAllOrders();
+        model.addAttribute("orderList", orderList);
+
+
         return "account/customer_order_data";
     }
 
-    @GetMapping("/data/customer/orders/details")
-    public String showCustomerOrdersDetail(Authentication authentication, Model model) {
+    @GetMapping("/data/customer/orders/details/{orderID}")
+    public String showCustomerOrdersDetail(@PathVariable("orderID") long orderID, Authentication authentication, Model model) {
 
         Optional<Customer> customer = customerService.getCustomerByEmail(authentication.getName());
 
@@ -114,6 +122,9 @@ public class CustomerController {
             model.addAttribute("customer", customer.get());
         } else
             return "redirect:/login";
+
+        Order order = orderService.findOrder(orderID);
+        model.addAttribute("order", order);
 
         return "account/customer_order_data_details";
     }

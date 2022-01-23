@@ -20,28 +20,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>001</td>
-            <td>Order XY</td>
-            <td>Erstellen einer Homepage</td>
-            <td>in bearbeitung</td>
-            <td>23.12.2021</td>
-            <td><a th:href="@{/data/customer/orders/details}">
+        <tr th:each="order: ${orderList}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.title}"></td>
+            <td th:text="${order.description}"></td>
+            <td th:text="${order.orderStatus}"></td>
+            <td th:text="${order.date}"></td>
+            <td><a th:href="@{/data/customer/orders/details/{orderID}(orderID=${order.id})}">
+
                 <button>Details</button>
             </a></td>
 
         </tr>
-        <tr>
-            <td>002</td>
-            <td>Order XX</td>
-            <td>Drucker einrichten</td>
-            <td>abgeschlossen</td>
-            <td>12.02.2021</td>
-            <td><a th:href="@{/data/customer/orders/details}">
-                <button>Details</button>
-            </a></td>
 
-        </tr>
         </tbody>
     </table>
     <p><br><br><br> </p>

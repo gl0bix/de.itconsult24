@@ -13,22 +13,22 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table th:object="${order}" class="table table-striped">
                             <tr>
                                 <th>Titel</th>
-                                <td><span>Order XY</span></td> <!-- th:text="${order.name}" -->
+                                <td><span th:text="*{title}" ></span></td> <!-- th:text="${order.name}" -->
                             </tr>
                             <tr>
                                 <th>Kategorie</th>
-                                <td><span>Software</span></td>
+                                <td><span th:text="*{orderType.value}"></span></td>
                             </tr>
                             <tr>
                                 <th>Beschreibung</th>
-                                <td><span></span></td>
+                                <td><span th:text="*{description}"></span></td>
                             </tr>
                             <tr>
                                 <th>Status</th>
-                                <td><span></span></td>
+                                <td><span th:text="*{orderStatus}"></span></td>
                             </tr>
                             <tr>
                                 <th>Dienstleister</th>
