@@ -58,10 +58,13 @@ public class OrderService {
         return orderRepository.save(Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
                 .description(questionnaire.getProblemDescription()) //TODO: add additional dat from questionnaire
+                .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
                 .orderType(questionnaire.getOrderType())
                 .customer(questionnaire.getCustomer())
                 .build());
+
+        //TODO: hier Aufruf um passende Provider nach OrderType zu finden und als Id-Liste in Order zu speichern
     }
 
 
@@ -75,9 +78,10 @@ public class OrderService {
                 && order.getCustomer() != null);
     }
 
-    public void commissionOrder(long orderId, String providerEmail){
-        if (providerEmail != null){
-            if (getOrder(orderId).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()){
+    public void commissionOrder(long orderId, String providerEmail) { //TODO save Order to database (repository.save())
+
+        if (providerEmail != null) {
+            if (getOrder(orderId).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
                 getOrder(orderId).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
             }
         }

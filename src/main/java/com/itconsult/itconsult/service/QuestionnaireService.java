@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -43,8 +44,9 @@ public class QuestionnaireService {
                 .typeOfProject(form.getTypeOfProject())
                 .systemadmin(form.getSystemAdmin())
                 .customer(form.getCustomer())
+                .date(new Date())
                 .build());
 
-//        orderService.createOrderFromQuestionnaire(questionnaire);
+        orderService.createOrderFromQuestionnaire(questionnaire);
     }
 }
