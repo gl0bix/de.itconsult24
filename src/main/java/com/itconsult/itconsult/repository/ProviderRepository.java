@@ -1,8 +1,8 @@
 package com.itconsult.itconsult.repository;
 
-import com.itconsult.itconsult.entity.Customer;
-import com.itconsult.itconsult.entity.Order;
+
 import com.itconsult.itconsult.entity.Provider;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.RepositoryDefinition;
 
@@ -13,5 +13,11 @@ import java.util.Optional;
 public interface ProviderRepository extends CrudRepository<Provider, Long> {
 
     Optional<Provider> findByEmail(String email);
+    List<Provider> findAllByOrderType();
 
+    /*
+    @Query("SELECT id from Provider")
+    List<Long> findAllIdByOrderType();
+    */
 }
+
