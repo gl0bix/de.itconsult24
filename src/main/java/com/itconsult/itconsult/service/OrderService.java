@@ -58,22 +58,27 @@ public class OrderService {
     public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
         //TODO: add additional dat from questionnaire
         //TODO-CHECKED
-        Order order = orderRepository.save(Order.builder()
+        Order order = Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
                 .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
                 .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
                 .orderType(questionnaire.getOrderType())
                 .customer(questionnaire.getCustomer())
-                .build());
+                .build();
+
+        order.setMatchingProviders(extractProviderIds(providerService.getProviderByOrderType(order.getOrderType())));
+
+        orderRepository.save(order);
 
         return order;
         //TODO: hier Aufruf um passende Provider nach OrderType zu finden und als Id-Liste in Order zu speichern
+        //TODO CHECKED
     }
 
-
-    public void searchProvider(Order order) { //TODO: return value missing/ get providerList from Service
-        providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
+    //Added return Type, nothing else yet
+    public List<Provider> searchProvider(Order order) { //TODO: return value missing/ get providerList from Service
+        return providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
     }
 
 
@@ -117,13 +122,16 @@ public class OrderService {
         }
     }
 
+    private List<Long> extractProviderIds(List<Provider> providers){
+        return providers.stream().map(Provider::getId).collect(Collectors.toList());
+    }
+
     //TODO-CHECKED: changeOrderStatus()
     private void changeOrderStatus(OrderStatus status, Order order) {
         if (order != null) {
             order.setOrderStatus(status);
         }
     }
-
 
     //descriptions implemented in createOrderFromQuestionnaire()
     private String descriptionToString(Questionnaire questionnaire) {

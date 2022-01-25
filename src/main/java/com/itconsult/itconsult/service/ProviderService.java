@@ -31,7 +31,7 @@ public class ProviderService {
         return providerRepository.findById(id);
     }
 
-    public List<Provider> getProviderByOrderType() { return providerRepository.findAllByOrderType(); }
+    public List<Provider> getProviderByOrderType(OrderType orderType) { return providerRepository.findAllByOrderType(orderType); }
 
     public Provider addProvider(String name, OrderType orderType, String street, String postalCode, String city, String country) {
 
