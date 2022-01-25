@@ -58,7 +58,7 @@ public class OrderService {
     public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
         //TODO: add additional dat from questionnaire
         //TODO-CHECKED
-        return orderRepository.save(Order.builder()
+        Order order = orderRepository.save(Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
                 .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
                 .date(questionnaire.getDate())
@@ -67,6 +67,7 @@ public class OrderService {
                 .customer(questionnaire.getCustomer())
                 .build());
 
+        return order;
         //TODO: hier Aufruf um passende Provider nach OrderType zu finden und als Id-Liste in Order zu speichern
     }
 
@@ -102,8 +103,8 @@ public class OrderService {
         }
     }
 
-    //TODO-CHECKED: Create Method SetStatusToFullfilled
-    public void setStatusToFullfilled(long orderId) {
+    //TODO-CHECKED: Create Method SetStatusToFulfilled
+    public void setStatusToFulfilled(long orderId) {
         if (getOrder(orderId).isPresent()) {
             changeOrderStatus(OrderStatus.FULFILLED, getOrder(orderId).get());
         }
@@ -129,31 +130,31 @@ public class OrderService {
         StringBuffer desc = new StringBuffer();
 
         if (questionnaire.getTypeOfAttack() != null)
-            desc.append("\nType of Attack: " + questionnaire.getTypeOfAttack());
+            desc.append("\nArt der Attacke: " + questionnaire.getTypeOfAttack());
 
         if (questionnaire.getTypeOfMeasure() != null)
-            desc.append("\nType of Measure: " + questionnaire.getTypeOfMeasure());
+            desc.append("\nArt der Maßnahme: " + questionnaire.getTypeOfMeasure());
 
         if (questionnaire.getTypeOfDevices() != null)
-            desc.append("\nType of Devices: " + questionnaire.getTypeOfDevices());
+            desc.append("\nGeräteart: " + questionnaire.getTypeOfDevices());
 
         if (questionnaire.getTypeOfSoftware() != null)
-            desc.append("\nType of Software: " + questionnaire.getTypeOfSoftware());
+            desc.append("\nSoftwaretyp: " + questionnaire.getTypeOfSoftware());
 
         if (questionnaire.getTypeOfCloud() != null)
-            desc.append("\nType of Cloud: " + questionnaire.getTypeOfCloud());
+            desc.append("\nTyp der Cloud: " + questionnaire.getTypeOfCloud());
 
         if (questionnaire.getNetwork() != null)
-            desc.append("\nNetwork: " + questionnaire.getNetwork());
+            desc.append("\nNetzwerk: " + questionnaire.getNetwork());
 
         if (questionnaire.getNetworkDetails() != null)
-            desc.append("\nNetwork details: " + questionnaire.getNetworkDetails());
+            desc.append("\nNetzwerk Details: " + questionnaire.getNetworkDetails());
 
         if (questionnaire.getProjectStatus() != null)
-            desc.append("\nProject status: " + questionnaire.getProjectStatus());
+            desc.append("\nProjekt Status: " + questionnaire.getProjectStatus());
 
         if (questionnaire.getTypeOfProject() != null)
-            desc.append("\nType of Project: " + questionnaire.getTypeOfProject());
+            desc.append("\nProjektart: " + questionnaire.getTypeOfProject());
 
         if (questionnaire.getSystemadmin() != null)
             desc.append("\nSystemadmin: " + questionnaire.getSystemadmin());

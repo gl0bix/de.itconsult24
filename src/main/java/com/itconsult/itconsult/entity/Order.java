@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -25,6 +26,9 @@ public class Order {
     private OrderStatus orderStatus;
     @Enumerated(EnumType.ORDINAL)
     private OrderType orderType;
+
+    @ElementCollection
+    private List<Long> matchingProviders;
 
     //relations
     @ManyToOne
