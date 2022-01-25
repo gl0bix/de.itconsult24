@@ -9,12 +9,16 @@
         $(document).ready(function(){
             $('#selectOrderType').on('change', function(){
                 var demovalue = $(this).val();
+                $("div.showQuestion1").hide(); //1. Frage (Sicherheitsarchitektur), um bugs zu verhindern
                 $("div.showQuestion").hide();
                 $("#"+demovalue).show();
             });
         });
     </script>
     <style>
+        .showQuestion1{
+            display:block;
+        }
         .showQuestion{
             display:none;
             padding:10px;
@@ -42,7 +46,6 @@
                                 *</label>
 
                             <select id="selectOrderType" class="form-select" th:field="*{orderType}">
-                                <option value="select">Bitte Waehlen</option>
                                 <option th:each="orderType : ${T(com.itconsult.itconsult.enums.OrderType).values()}"
                                         th:value="${orderType}" th:text="${orderType.value}"></option>
                             </select>
@@ -101,7 +104,7 @@
                         <div id="detailQuestions" class="form-group">
                             <h3>Detailfragen</h3>
 
-                            <div id="SECURITY_ARCHITECTURE" class="showQuestion">
+                            <div id="SECURITY_ARCHITECTURE" class="showQuestion1">
                                 <div class="form-group mb-2">
                                     <label class="form-label">Sicherheitsarchitektur: Art der Maßnahme (eigene Eingabe
                                         möglich)</label>
