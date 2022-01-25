@@ -4,9 +4,11 @@ import com.itconsult.itconsult.controller.form.CustomerFormModel;
 import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
 import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.entity.Order;
+import com.itconsult.itconsult.entity.Provider;
 import com.itconsult.itconsult.service.CustomerService;
 import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
 import com.itconsult.itconsult.service.OrderService;
+import com.itconsult.itconsult.service.ProviderService;
 import lombok.AllArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.security.core.Authentication;
@@ -25,6 +27,7 @@ import java.util.Optional;
 public class CustomerController {
     private final CustomerService customerService;
     private final OrderService orderService;
+    private final ProviderService providerService;
 
 
     @Deprecated
@@ -125,6 +128,10 @@ public class CustomerController {
 
         Order order = orderService.findOrder(orderID);
         model.addAttribute("order", order);
+
+        List<Provider> provider = providerService.getallProviders();
+        model.addAttribute("provider", provider);
+
 
         return "account/customer_order_data_details";
     }
