@@ -10,7 +10,6 @@ public enum OrderType {
     HARDWARE("Hardware"),
     SCALABILITY("Leistung, Skalierung"),
     CLOUD("Cloudanwendungen"),
-    INFRASTRUCTURE("internes Netzwerk"),
     SOFTWARE_DEVELOPMENT("Softwareentwicklung"),
     NETWORK("Netzwerkinfrastruktur"),
     ADMINISTRATION("Systemadministration");
