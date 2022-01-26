@@ -24,7 +24,6 @@ public class OrderService {
     private List<Provider> providerList;
     private final ProviderService providerService;
     private final CustomerService customerService;
-    private final QuestionnaireService questionnaireService;
 
 
     public List<Order> getAllOrders() {
@@ -56,8 +55,6 @@ public class OrderService {
     }
 
     public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
-        //TODO: add additional dat from questionnaire
-        //TODO-CHECKED
         Order order = Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
                 .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
@@ -72,18 +69,12 @@ public class OrderService {
         orderRepository.save(order);
 
         return order;
-        //TODO: hier Aufruf um passende Provider nach OrderType zu finden und als Id-Liste in Order zu speichern
-        //TODO CHECKED
     }
 
-    //Added return Type, nothing else yet
-    public List<Provider> searchProvider(Order order) { //TODO: return value missing/ get providerList from Service
+    public List<Provider> searchProvider(Order order) {
         return providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
     }
 
-
-    //TODO: @Parameter orderId, pull Order from repo
-    //TODO-CHECKED
     public boolean orderComplete(long orderId) {
 
         if (getOrder(orderId).isPresent()) {
@@ -96,26 +87,21 @@ public class OrderService {
     }
 
     public void commissionOrder(long id, String providerEmail) {
-
-        //TODO save Order to database (repository.save())
-        // TODO-CHECK
         if (providerEmail != null) {
             if (getOrder(id).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
                 getOrder(id).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
-                changeOrderStatus(OrderStatus.IN_PROGRESS, getOrder(id).get()); //TODO: Use changeOrderStatus => CHECK
+                changeOrderStatus(OrderStatus.IN_PROGRESS, getOrder(id).get());
                 orderRepository.save(getOrder(id).get());
             }
         }
     }
 
-    //TODO-CHECKED: Create Method SetStatusToFulfilled
     public void setStatusToFulfilled(long orderId) {
         if (getOrder(orderId).isPresent()) {
             changeOrderStatus(OrderStatus.FULFILLED, getOrder(orderId).get());
         }
     }
 
-    //TODO-CHECKED: Create Method SetStatusToDiscarded
     public void setStatusToDiscarded(long orderId) {
         if (getOrder(orderId).isPresent()) {
             changeOrderStatus(OrderStatus.DISCARDED, getOrder(orderId).get());
@@ -126,7 +112,6 @@ public class OrderService {
         return providers.stream().map(Provider::getId).collect(Collectors.toList());
     }
 
-    //TODO-CHECKED: changeOrderStatus()
     private void changeOrderStatus(OrderStatus status, Order order) {
         if (order != null) {
             order.setOrderStatus(status);
