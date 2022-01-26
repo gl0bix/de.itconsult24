@@ -9,6 +9,7 @@ import com.itconsult.itconsult.enums.OrderType;
 import com.itconsult.itconsult.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -38,6 +39,11 @@ public class OrderService {
         return orderRepository.findAllByProvider(providerService.getProvider(id).get());
     }
 
+    public Order findOrder(long id) {
+
+        return orderRepository.findOrderById(id);
+    }
+
     public Optional<Order> getOrder(long id) {
 
         return orderRepository.findById(id);
@@ -54,9 +60,9 @@ public class OrderService {
                 .build());
     }
 
-    public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
+    public void createOrderFromQuestionnaire(Questionnaire questionnaire) {
         Order order = Order.builder()
-                .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
+                .title(questionnaire.getOrderType().getValue() + questionnaire.getUrgency() + questionnaire.getDate())
                 .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
                 .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
@@ -68,7 +74,6 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        return order;
     }
 
     public List<Provider> searchProvider(Order order) {
@@ -86,13 +91,12 @@ public class OrderService {
         return false;
     }
 
-    public void commissionOrder(long id, String providerEmail) {
-        if (providerEmail != null) {
-            if (getOrder(id).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
-                getOrder(id).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
-                changeOrderStatus(OrderStatus.IN_PROGRESS, getOrder(id).get());
-                orderRepository.save(getOrder(id).get());
-            }
+    public void commissionOrder(long orderId, long providerId) {
+        if (getOrder(orderId).isPresent() && providerService.getProvider(providerId).isPresent()) {
+            var order = getOrder(orderId).get();
+            order.setProvider(providerService.getProvider(providerId).get());
+            order.setOrderStatus(OrderStatus.IN_PROGRESS);
+            orderRepository.save(order);
         }
     }
 
@@ -108,7 +112,7 @@ public class OrderService {
         }
     }
 
-    private List<Long> extractProviderIds(List<Provider> providers){
+    private List<Long> extractProviderIds(List<Provider> providers) {
         return providers.stream().map(Provider::getId).collect(Collectors.toList());
     }
 
@@ -120,37 +124,37 @@ public class OrderService {
 
     //descriptions implemented in createOrderFromQuestionnaire()
     private String descriptionToString(Questionnaire questionnaire) {
-        StringBuffer desc = new StringBuffer();
+        StringBuilder desc = new StringBuilder();
 
-        if (questionnaire.getTypeOfAttack() != null)
-            desc.append("\nArt der Attacke: " + questionnaire.getTypeOfAttack());
+        if (Strings.isNotEmpty(questionnaire.getTypeOfAttack()))
+            desc.append("\nArt der Attacke: ").append(questionnaire.getTypeOfAttack());
 
-        if (questionnaire.getTypeOfMeasure() != null)
-            desc.append("\nArt der Maßnahme: " + questionnaire.getTypeOfMeasure());
+        if (Strings.isNotEmpty(questionnaire.getTypeOfMeasure()))
+            desc.append("\nArt der Maßnahme: ").append(questionnaire.getTypeOfMeasure());
 
-        if (questionnaire.getTypeOfDevices() != null)
-            desc.append("\nGeräteart: " + questionnaire.getTypeOfDevices());
+        if (Strings.isNotEmpty(questionnaire.getTypeOfDevices()))
+            desc.append("\nGeräteart: ").append(questionnaire.getTypeOfDevices());
 
-        if (questionnaire.getTypeOfSoftware() != null)
-            desc.append("\nSoftwaretyp: " + questionnaire.getTypeOfSoftware());
+        if (Strings.isNotEmpty(questionnaire.getTypeOfSoftware()))
+            desc.append("\nSoftwaretyp: ").append(questionnaire.getTypeOfSoftware());
 
-        if (questionnaire.getTypeOfCloud() != null)
-            desc.append("\nTyp der Cloud: " + questionnaire.getTypeOfCloud());
+        if (Strings.isNotEmpty(questionnaire.getTypeOfCloud()))
+            desc.append("\nTyp der Cloud: ").append(questionnaire.getTypeOfCloud());
 
-        if (questionnaire.getNetwork() != null)
-            desc.append("\nNetzwerk: " + questionnaire.getNetwork());
+        if (Strings.isNotEmpty(questionnaire.getNetwork()))
+            desc.append("\nNetzwerk: ").append(questionnaire.getNetwork());
 
-        if (questionnaire.getNetworkDetails() != null)
-            desc.append("\nNetzwerk Details: " + questionnaire.getNetworkDetails());
+        if (Strings.isNotEmpty(questionnaire.getNetworkDetails()))
+            desc.append("\nNetzwerk Details: ").append(questionnaire.getNetworkDetails());
 
-        if (questionnaire.getProjectStatus() != null)
-            desc.append("\nProjekt Status: " + questionnaire.getProjectStatus());
+        if (Strings.isNotEmpty(questionnaire.getProjectStatus()))
+            desc.append("\nProjekt Status: ").append(questionnaire.getProjectStatus());
 
-        if (questionnaire.getTypeOfProject() != null)
-            desc.append("\nProjektart: " + questionnaire.getTypeOfProject());
+        if (Strings.isNotEmpty(questionnaire.getTypeOfProject()))
+            desc.append("\nProjektart: ").append(questionnaire.getTypeOfProject());
 
-        if (questionnaire.getSystemadmin() != null)
-            desc.append("\nSystemadmin: " + questionnaire.getSystemadmin());
+        if (Strings.isNotEmpty(questionnaire.getSystemadmin()))
+            desc.append("\nSystemadmin: ").append(questionnaire.getSystemadmin());
 
         return desc.toString();
     }

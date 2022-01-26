@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Meine Aufträge</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Meine Aufträge</h2>
+    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titel</th>
+            <th>Beschreibung</th>
+            <th>Status</th>
+            <th>Datum</th>
+            <th></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order: ${orderList}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.title}"></td>
+            <td th:text="${order.description}"></td>
+            <td th:text="${order.orderStatus}"></td>
+            <td th:text="${order.date}"></td>
+            <td><a th:href="@{/data/customer/orders/details/{orderID}(orderID=${order.id})}">
+
+                <button>Details</button>
+            </a></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+    <p><br><br><br> </p>
+
+
+
+    </div>
+
+</body>
+</html>

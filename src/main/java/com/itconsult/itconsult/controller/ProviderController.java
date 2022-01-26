@@ -1,8 +1,9 @@
 package com.itconsult.itconsult.controller;
 
 import com.itconsult.itconsult.controller.form.ProviderRegisterFormModel;
-import com.itconsult.itconsult.entity.Provider;
+import com.itconsult.itconsult.entity.Order;
 import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
+import com.itconsult.itconsult.service.OrderService;
 import com.itconsult.itconsult.service.ProviderService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -11,16 +12,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 public class ProviderController {
 
     private final ProviderService providerService;
+    private final OrderService orderService;
 
     @GetMapping("register/provider")
     public String showRegisterForm(Model model) {
@@ -52,14 +54,34 @@ public class ProviderController {
     @GetMapping("data/provider")
     public String showProviderData(Authentication authentication, Model model) {
 
-        Optional<Provider> provider = providerService.getProviderByEmail(authentication.getName());
-
-        if (authentication.isAuthenticated() && provider.isPresent()) {
-            model.addAttribute("provider", provider.get());
-        } else
-            return "redirect:/login";
+        providerService.getProviderByEmail(authentication.getName()).ifPresent(
+                provider -> model.addAttribute("provider", provider)
+        );
 
         return "account/provider_data";
     }
 
+    @GetMapping("/data/provider/orders")
+    public String showProviderOrders(Authentication authentication, Model model) {
+
+        providerService.getProviderByEmail(authentication.getName()).ifPresent(
+                provider -> {
+                    final var orderList = orderService.getAllOrdersByProvider(provider.getId());
+                    model.addAttribute("orderList", orderList);
+
+                }
+        );
+
+        return "account/provider_order_data";
+    }
+
+    @GetMapping("/data/provider/orders/details/{orderID}")
+    public String showCustomerOrdersDetail(@PathVariable("orderID") long orderID, Model model) {
+
+        Order order = orderService.findOrder(orderID);
+        model.addAttribute("order", order);
+
+
+        return "account/provider_order_data_details";
+    }
 }

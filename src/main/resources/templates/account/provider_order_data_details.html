@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Meine Aufträge</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Mein Auftrag</h2>
+
+    <table class="table table-bordered table-striped">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="table-responsive">
+                        <table th:object="${order}" class="table table-striped">
+                            <tr>
+                                <th>Titel</th>
+                                <td><span th:text="*{title}" ></span></td> <!-- th:text="${order.name}" -->
+                            </tr>
+                            <tr>
+                                <th>Kategorie</th>
+                                <td><span th:text="*{orderType.value}"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Beschreibung</th>
+                                <td><span th:text="*{description}"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td><span th:text="*{orderStatus}"></span></td>
+                            </tr>
+                            <tr>
+                                <th>Datum</th>
+                                <td><span th:text="*{date}"></span></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </table>
+
+
+</div>
+</body>
+</html>
+
+
+
