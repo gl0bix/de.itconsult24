@@ -53,16 +53,16 @@
                         <div class="form-group mb-2">
                             <label class="form-label">Wie eilig ist Ihr Anliegen? *</label>
                             <select class="form-select" th:object="${questionnaire}" th:field="*{urgency}">
-                                <option value="veryUrgent" selected>
+                                <option value="sehr eilig" selected>
                                     sehr eilig
                                 </option>
-                                <option value="urgent">
+                                <option value="eilig">
                                     eilig
                                 </option>
-                                <option value="lessUrgent">
+                                <option value="weniger eilig">
                                     weniger eilig
                                 </option>
-                                <option value="notUrgent">
+                                <option value="nicht eilig">
                                     nicht eilig
                                 </option>
                             </select>
@@ -70,16 +70,16 @@
                         <div class="form-group mb-2">
                             <label class="form-label">Wie schätzen Sie den Umfang Ihres Anliegens ein? *</label>
                             <select class="form-select" name="volume" th:field="*{duration}">
-                                <option value="shortCommission" selected>
+                                <option value="Kurzauftrag" selected>
                                     Kurzauftrag
                                 </option>
-                                <option value="middleTermProjekt">
+                                <option value="mittelfristiges Projekt">
                                     mittelfristiges Projekt
                                 </option>
-                                <option value="longTermProjekt">
+                                <option value="langfristiges Projekt">
                                     langfristiges Projekt
                                 </option>
-                                <option value="unsure">
+                                <option value="unsicher">
                                     unsicher
                                 </option>
                             </select>
@@ -94,8 +94,9 @@
                         <div class="form-group mb-2">
                             <label class="form-label">Hier können Sie Ihr Anliegen in eigenen Worten
                                 beschreiben/ergänzen. *</label>
-                            <textarea class="form-control" name="problemDescription" placeholder=""
+                            <textarea class="form-control" name="problemDescription"
                                       th:field="*{problemDescription}"
+                                      placeholder="Problembeschreibung"
                                       required="required"></textarea>
                         </div>
                         <small>Felder markiert mit * sind Pflichtfelder.</small>

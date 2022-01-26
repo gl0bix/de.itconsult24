@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -90,12 +91,9 @@ public class CustomerController {
     @GetMapping("data/customer")
     public String showCustomerData(Authentication authentication, Model model) {
 
-        Optional<Customer> customer = customerService.getCustomerByEmail(authentication.getName());
-
-        if (authentication.isAuthenticated() && customer.isPresent()) {
-            model.addAttribute("customer", customer.get());
-        } else
-            return "redirect:/login";
+        customerService.getCustomerByEmail(authentication.getName()).ifPresent(
+                customer -> model.addAttribute("customer", customer)
+        );
 
         return "account/customer_data";
     }
@@ -103,39 +101,40 @@ public class CustomerController {
     @GetMapping("/data/customer/orders")
     public String showCustomerOrders(Authentication authentication, Model model) {
 
-        Optional<Customer> customer = customerService.getCustomerByEmail(authentication.getName());
-
-        if (authentication.isAuthenticated() && customer.isPresent()) {
-            model.addAttribute("customer", customer.get());
-        } else
-            return "redirect:/login";
-
-
-        List<Order> orderList = orderService.getAllOrders();
-        model.addAttribute("orderList", orderList);
-
+        customerService.getCustomerByEmail(authentication.getName()).ifPresent(
+                customer -> {
+                    final var orderList = orderService.getAllOrdersByCustomer(customer.getId());
+                    model.addAttribute("orderList", orderList);
+                }
+        );
 
         return "account/customer_order_data";
     }
 
     @GetMapping("/data/customer/orders/details/{orderID}")
-    public String showCustomerOrdersDetail(@PathVariable("orderID") long orderID, Authentication authentication, Model model) {
-
-        Optional<Customer> customer = customerService.getCustomerByEmail(authentication.getName());
-
-        if (authentication.isAuthenticated() && customer.isPresent()) {
-            model.addAttribute("customer", customer.get());
-        } else
-            return "redirect:/login";
+    public String showCustomerOrdersDetail(@PathVariable("orderID") long orderID, Model model) {
 
         Order order = orderService.findOrder(orderID);
         model.addAttribute("order", order);
 
-        List<Provider> provider = providerService.getAllProviders();
-        model.addAttribute("provider", provider);
+        List<Provider> providers = new ArrayList<>();
+
+        order.getMatchingProviders().forEach((id) -> providerService.getProvider(id).ifPresent(providers::add));
+        model.addAttribute("providers", providers);
 
 
         return "account/customer_order_data_details";
+    }
+
+    @PostMapping("/approve_provider")
+    public String approveProvider(
+            @ModelAttribute(name = "orderId") long orderId,
+            @ModelAttribute(name = "providerId") long providerId,
+            RedirectAttributes redirectAttrs) {
+        orderService.commissionOrder(orderId, providerId);
+
+        redirectAttrs.addFlashAttribute("success", "Der Provider wurde beauftragt!");
+        return "redirect:data/customer/orders";
     }
 
 

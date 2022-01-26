@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-    <title>Meine Auftraege</title>
+    <title>Meine Aufträge</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -37,10 +37,6 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <a th:action="@{approve_order/{orderID}(orderID=*{id})}"><button type="button" class="btn btn-lg btn-primary">Order bestätigen</button></a>
-
                             </tr>
 
                         </table>

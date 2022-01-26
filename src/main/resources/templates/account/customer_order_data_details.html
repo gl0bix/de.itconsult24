@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-    <title>Meine Auftraege</title>
+    <title>Meine Aufträge</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -16,7 +16,7 @@
                         <table th:object="${order}" class="table table-striped">
                             <tr>
                                 <th>Titel</th>
-                                <td><span th:text="*{title}" ></span></td> <!-- th:text="${order.name}" -->
+                                <td><span th:text="*{title}"></span></td> <!-- th:text="${order.name}" -->
                             </tr>
                             <tr>
                                 <th>Kategorie</th>
@@ -32,15 +32,19 @@
                             </tr>
                             <tr>
                                 <th>Dienstleister</th>
-                                <td th:each="provider : ${provider}" ><span>
-                                <select id="selectProvider" class="form-select">
-                                    <option
-                                    th:value="${provider.name}" th:text="${provider.name}" ></option>
-                            </select>
-                                <a th:action="@{approve_provider/{providerID}(providerID=${provider.id})}"><button type="button" class="btn btn-lg btn-primary">Dienstleister bestätigen</button></a>
-
-
-                                </span></td>
+                                <td>
+                                    <form th:action="@{/approve_provider}" method="post">
+                                        <span>
+                                            <select id="selectProvider" class="form-select" name="providerId">
+                                                <option th:each="provider : ${providers}"
+                                                        th:value="${provider.id}" th:text="${provider.name}"></option>
+                                            </select>
+                                            <input name="orderId" th:value="${order.getId()}" hidden>
+                                    <button type="submit"
+                                            class="btn btn-lg btn-primary">Dienstleister bestätigen</button>
+                                    </span>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -55,7 +59,6 @@
                 </div>
             </div>
         </div>
-
     </table>
 
 
