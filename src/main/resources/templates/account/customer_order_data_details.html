@@ -32,14 +32,15 @@
                             </tr>
                             <tr>
                                 <th>Dienstleister</th>
-                                <td><span>
+                                <td th:each="provider : ${provider}" ><span>
                                 <select id="selectProvider" class="form-select">
-                                    <option th:each="provider : ${provider}"
-                                    th:value="${provider.name}" th:text="${provider.name}" (providerID=${provider.id})></option>
+                                    <option
+                                    th:value="${provider.name}" th:text="${provider.name}" ></option>
                             </select>
+                                <a th:action="@{approve_provider/{providerID}(providerID=${provider.id})}"><button type="button" class="btn btn-lg btn-primary">Dienstleister bestätigen</button></a>
 
 
-                            </span></td>
+                                </span></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -47,7 +48,6 @@
                             </tr>
                             <tr>
 
-                                <td><a th:action="@{approve_provider/{providerID}}"><button type="button" class="btn btn-lg btn-primary">Dienstleister bestätigen</button></a><span ></span></td>
                             </tr>
 
                         </table>
