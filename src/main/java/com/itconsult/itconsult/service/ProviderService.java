@@ -21,15 +21,17 @@ public class ProviderService {
     private final ProviderRepository providerRepository;
     private PasswordEncoder passwordEncoder;
 
-    public Optional<Provider> getProviderByEmail(String email) {return providerRepository.findByEmail(email);}
+    public Optional<Provider> getProviderByEmail(String email) { return providerRepository.findByEmail(email); }
 
-    public List<Provider> getallProviders() {
+    public List<Provider> getAllProviders() {
         return (List<Provider>) providerRepository.findAll();
     }
 
     public Optional<Provider> getProvider(long id) {
         return providerRepository.findById(id);
     }
+
+    public List<Provider> getProviderByOrderType(OrderType orderType) { return providerRepository.findAllByOrderType(orderType); }
 
     public Provider addProvider(String name, OrderType orderType, String street, String postalCode, String city, String country) {
 

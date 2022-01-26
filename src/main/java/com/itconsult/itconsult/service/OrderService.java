@@ -55,46 +55,103 @@ public class OrderService {
     }
 
     public Order createOrderFromQuestionnaire(Questionnaire questionnaire) {
-        return orderRepository.save(Order.builder()
+        Order order = Order.builder()
                 .title(questionnaire.getOrderType().name() + questionnaire.getUrgency() + questionnaire.getDate())
-                .description(questionnaire.getProblemDescription()) //TODO: add additional dat from questionnaire
+                .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
                 .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
                 .orderType(questionnaire.getOrderType())
                 .customer(questionnaire.getCustomer())
-                .build());
+                .build();
 
-        //TODO: hier Aufruf um passende Provider nach OrderType zu finden und als Id-Liste in Order zu speichern
+        order.setMatchingProviders(extractProviderIds(providerService.getProviderByOrderType(order.getOrderType())));
+
+        orderRepository.save(order);
+
+        return order;
     }
 
-
-    public void searchProvider(Order order) { //TODO: return value missing/ get providerList from Service
-        providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
+    public List<Provider> searchProvider(Order order) {
+        return providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
     }
 
-    public boolean orderComplete(Order order) {
-        return (order.getOrderType() != null && order.getOrderStatus() != null
-                && order.getDate() != null && order.getTitle() != null && order.getDescription() != null
-                && order.getCustomer() != null);
+    public boolean orderComplete(long orderId) {
+
+        if (getOrder(orderId).isPresent()) {
+            Order order = getOrder(orderId).get();
+            return (order.getOrderType() != null && order.getOrderStatus() != null
+                    && order.getDate() != null && order.getTitle() != null && order.getDescription() != null
+                    && order.getCustomer() != null);
+        }
+        return false;
     }
 
-    public void commissionOrder(long orderId, String providerEmail) { //TODO save Order to database (repository.save())
-
+    public void commissionOrder(long id, String providerEmail) {
         if (providerEmail != null) {
-            if (getOrder(orderId).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
-                getOrder(orderId).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
+            if (getOrder(id).isPresent() && providerService.getProviderByEmail(providerEmail).isPresent()) {
+                getOrder(id).get().setProvider(providerService.getProviderByEmail(providerEmail).get());
+                changeOrderStatus(OrderStatus.IN_PROGRESS, getOrder(id).get());
+                orderRepository.save(getOrder(id).get());
             }
         }
     }
 
+    public void setStatusToFulfilled(long orderId) {
+        if (getOrder(orderId).isPresent()) {
+            changeOrderStatus(OrderStatus.FULFILLED, getOrder(orderId).get());
+        }
+    }
 
+    public void setStatusToDiscarded(long orderId) {
+        if (getOrder(orderId).isPresent()) {
+            changeOrderStatus(OrderStatus.DISCARDED, getOrder(orderId).get());
+        }
+    }
 
-    /**
-     * TODO
-     * CustomerService aufrufen, falls neue Order
-     * propose Order
-     *
-     * OrderService Boolean, ob Order vollständig (CHECKED)
-     * OrderService: commissionOrder(order id) (CHECKED)
-     */
+    private List<Long> extractProviderIds(List<Provider> providers){
+        return providers.stream().map(Provider::getId).collect(Collectors.toList());
+    }
+
+    private void changeOrderStatus(OrderStatus status, Order order) {
+        if (order != null) {
+            order.setOrderStatus(status);
+        }
+    }
+
+    //descriptions implemented in createOrderFromQuestionnaire()
+    private String descriptionToString(Questionnaire questionnaire) {
+        StringBuffer desc = new StringBuffer();
+
+        if (questionnaire.getTypeOfAttack() != null)
+            desc.append("\nArt der Attacke: " + questionnaire.getTypeOfAttack());
+
+        if (questionnaire.getTypeOfMeasure() != null)
+            desc.append("\nArt der Maßnahme: " + questionnaire.getTypeOfMeasure());
+
+        if (questionnaire.getTypeOfDevices() != null)
+            desc.append("\nGeräteart: " + questionnaire.getTypeOfDevices());
+
+        if (questionnaire.getTypeOfSoftware() != null)
+            desc.append("\nSoftwaretyp: " + questionnaire.getTypeOfSoftware());
+
+        if (questionnaire.getTypeOfCloud() != null)
+            desc.append("\nTyp der Cloud: " + questionnaire.getTypeOfCloud());
+
+        if (questionnaire.getNetwork() != null)
+            desc.append("\nNetzwerk: " + questionnaire.getNetwork());
+
+        if (questionnaire.getNetworkDetails() != null)
+            desc.append("\nNetzwerk Details: " + questionnaire.getNetworkDetails());
+
+        if (questionnaire.getProjectStatus() != null)
+            desc.append("\nProjekt Status: " + questionnaire.getProjectStatus());
+
+        if (questionnaire.getTypeOfProject() != null)
+            desc.append("\nProjektart: " + questionnaire.getTypeOfProject());
+
+        if (questionnaire.getSystemadmin() != null)
+            desc.append("\nSystemadmin: " + questionnaire.getSystemadmin());
+
+        return desc.toString();
+    }
 }
