@@ -25,11 +25,11 @@
             <td th:text="${order.id}"></td>
             <td th:text="${order.title}"></td>
             <td th:text="${order.description}"></td>
-            <td th:text="${order.orderStatus}"></td>
+            <td th:text="${order.orderStatus.value}"></td>
             <td th:text="${order.date}"></td>
             <td><a th:href="@{/data/customer/orders/details/{orderID}(orderID=${order.id})}">
 
-                <button>Details</button>
+                <button class="btn btn-outline-primary">Details</button>
             </a></td>
 
         </tr>

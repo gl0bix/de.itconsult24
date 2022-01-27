@@ -62,7 +62,7 @@ public class OrderService {
 
     public void createOrderFromQuestionnaire(Questionnaire questionnaire) {
         Order order = Order.builder()
-                .title(questionnaire.getOrderType().getValue() + questionnaire.getUrgency() + questionnaire.getDate())
+                .title(questionnaire.getOrderType().getValue() + ": " + questionnaire.getUrgency())
                 .description(questionnaire.getProblemDescription() + descriptionToString(questionnaire))
                 .date(questionnaire.getDate())
                 .orderStatus(OrderStatus.OPEN)
@@ -101,15 +101,17 @@ public class OrderService {
     }
 
     public void setStatusToFulfilled(long orderId) {
-        if (getOrder(orderId).isPresent()) {
-            changeOrderStatus(OrderStatus.FULFILLED, getOrder(orderId).get());
-        }
+        getOrder(orderId).ifPresent(order -> {
+            changeOrderStatus(OrderStatus.FULFILLED, order);
+            orderRepository.save(order);
+        });
     }
 
     public void setStatusToDiscarded(long orderId) {
-        if (getOrder(orderId).isPresent()) {
-            changeOrderStatus(OrderStatus.DISCARDED, getOrder(orderId).get());
-        }
+        getOrder(orderId).ifPresent(order -> {
+            changeOrderStatus(OrderStatus.DISCARDED, order);
+            orderRepository.save(order);
+        });
     }
 
     private List<Long> extractProviderIds(List<Provider> providers) {

@@ -28,20 +28,23 @@
                             </tr>
                             <tr>
                                 <th>Status</th>
-                                <td><span th:text="*{orderStatus}"></span></td>
+                                <td><span th:text="*{orderStatus.value}"></span></td>
                             </tr>
                             <tr>
                                 <th>Dienstleister</th>
                                 <td>
+                                    <span th:if="${order.provider != null}" th:text="${order.provider.getName()}"></span>
+
+
                                     <form th:action="@{/approve_provider}" method="post">
-                                        <span>
+                                        <span th:if="${order.provider == null}">
                                             <select id="selectProvider" class="form-select" name="providerId">
                                                 <option th:each="provider : ${providers}"
                                                         th:value="${provider.id}" th:text="${provider.name}"></option>
                                             </select>
                                             <input name="orderId" th:value="${order.getId()}" hidden>
                                     <button type="submit"
-                                            class="btn btn-lg btn-primary">Dienstleister bestätigen</button>
+                                            class="btn btn-primary mt-2">Dienstleister bestätigen</button>
                                     </span>
                                     </form>
                                 </td>
