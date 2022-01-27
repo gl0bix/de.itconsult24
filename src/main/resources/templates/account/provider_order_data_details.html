@@ -28,14 +28,62 @@
                             </tr>
                             <tr>
                                 <th>Status</th>
-                                <td><span th:text="*{orderStatus}"></span></td>
+                                <td><span th:text="*{orderStatus.value}"></span></td>
                             </tr>
                             <tr>
                                 <th>Datum</th>
                                 <td><span th:text="*{date}"></span></td>
                             </tr>
                             <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Kunde</th>
+                                <td><span th:text="*{customer.firstname + ' ' + customer.lastname}" ></span></td>
+                            </tr>
+                            <tr>
+                                <th>Telefon</th>
+                                <td><span th:text="*{customer.phoneNumber}" ></span></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><span th:text="*{customer.email}" ></span></td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td><span th:text="*{customer.street}" ></span></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td><span th:text="*{customer.postalCode + ' ' + customer.city}" ></span></td>
+                            </tr>
+                            <tr>
+                                <th></th>
                                 <td></td>
+                            </tr>
+                            <tr th:if="${order.orderStatus == order.orderStatus.OPEN || order.orderStatus == order.orderStatus.IN_PROGRESS}">
+                                <td>
+                                    <form th:action="@{/setFulfilled}" method="post">
+                                        <input name="orderId" th:value="${order.getId()}" hidden>
+                                        <button type="submit"
+                                            class="btn btn-lg btn-primary">Auftrag abschließen</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form th:action="@{/setDiscarded}" method="post">
+                                        <input name="orderId" th:value="${order.getId()}" hidden>
+                                        <button type="submit"
+                                        class="btn btn-lg btn-primary">Auftrag ablehnen</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${order.orderStatus == order.orderStatus.FULFILLED}">
+                                <th>Auftrag Abgeschlossen</th>
+                                <td></td>
+                            </tr>
+                            <tr th:if="${order.orderStatus == order.orderStatus.DISCARDED}">
+                                <th>Auftrag Abgelehnt</th>
                                 <td></td>
                             </tr>
 

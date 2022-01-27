@@ -119,8 +119,10 @@ public class CustomerController {
 
         List<Provider> providers = new ArrayList<>();
 
+
         order.getMatchingProviders().forEach((id) -> providerService.getProvider(id).ifPresent(providers::add));
         model.addAttribute("providers", providers);
+
 
 
         return "account/customer_order_data_details";

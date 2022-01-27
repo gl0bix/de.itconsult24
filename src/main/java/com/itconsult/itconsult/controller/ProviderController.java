@@ -84,4 +84,16 @@ public class ProviderController {
 
         return "account/provider_order_data_details";
     }
+    @PostMapping("/setFulfilled")
+    public String setOrderStatusToFulfilled(@ModelAttribute("orderId") long orderId){
+        orderService.setStatusToFulfilled(orderId);
+        return "redirect:/data/provider/orders";
+    }
+
+    @PostMapping("/setDiscarded")
+    public String setOrderStatusToDiscarded(@ModelAttribute("orderId") long orderId){
+        orderService.setStatusToDiscarded(orderId);
+        return "redirect:/data/provider/orders";
+    }
+
 }
