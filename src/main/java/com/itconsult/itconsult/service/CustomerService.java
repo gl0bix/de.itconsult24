@@ -4,6 +4,7 @@ package com.itconsult.itconsult.service;
 import com.itconsult.itconsult.controller.form.CustomerRegisterFormModel;
 import com.itconsult.itconsult.entity.Customer;
 import com.itconsult.itconsult.repository.CustomerRepository;
+import com.itconsult.itconsult.repository.ProviderRepository;
 import com.itconsult.itconsult.service.Exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CustomerService{
     private final CustomerRepository customerRepository;
+    private final ProviderRepository providerRepository;
     private PasswordEncoder passwordEncoder;
 
 
@@ -67,6 +69,7 @@ public class CustomerService{
     }
 
     private boolean emailExists(String email) {
-        return customerRepository.findByEmail(email).isPresent();
+        return (customerRepository.findByEmail(email).isPresent() ||
+                providerRepository.findByEmail(email).isPresent());
     }
 }

@@ -60,6 +60,7 @@ public class OrderService {
                 .build());
     }
 
+    //creates an Order from the parameter and searches for all Providers, who match the OrderType
     public void createOrderFromQuestionnaire(Questionnaire questionnaire) {
         Order order = Order.builder()
                 .title(questionnaire.getOrderType().getValue() + ": " + questionnaire.getUrgency())
@@ -76,6 +77,7 @@ public class OrderService {
 
     }
 
+    //returns a List of all Providers, who match the OrderType of the parameter
     public List<Provider> searchProvider(Order order) {
         return providerList.stream().filter(provider -> provider.getOrderType().equals(order.getOrderType())).collect(Collectors.toList());
     }
@@ -91,6 +93,7 @@ public class OrderService {
         return false;
     }
 
+    //assigns a Provider to an Order and sets the OrderStatus to IN_PROGRESS
     public void commissionOrder(long orderId, long providerId) {
         if (getOrder(orderId).isPresent() && providerService.getProvider(providerId).isPresent()) {
             var order = getOrder(orderId).get();
@@ -114,10 +117,12 @@ public class OrderService {
         });
     }
 
+    //returns a List, containing only the Provider Ids from the parameter Provider objects
     private List<Long> extractProviderIds(List<Provider> providers) {
         return providers.stream().map(Provider::getId).collect(Collectors.toList());
     }
 
+    //helper method implemented in commissionOrder()
     private void changeOrderStatus(OrderStatus status, Order order) {
         if (order != null) {
             order.setOrderStatus(status);
