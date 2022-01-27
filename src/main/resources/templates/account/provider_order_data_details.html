@@ -67,14 +67,16 @@
                                     <form th:action="@{/setFulfilled}" method="post">
                                         <input name="orderId" th:value="${order.getId()}" hidden>
                                         <button type="submit"
-                                            class="btn btn-lg btn-primary">Auftrag abschließen</button>
+                                                class="btn btn-primary">Auftrag abschließen
+                                        </button>
                                     </form>
                                 </td>
                                 <td>
                                     <form th:action="@{/setDiscarded}" method="post">
                                         <input name="orderId" th:value="${order.getId()}" hidden>
                                         <button type="submit"
-                                        class="btn btn-lg btn-primary">Auftrag ablehnen</button>
+                                                class="btn btn-primary">Auftrag ablehnen
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
